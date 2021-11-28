@@ -17,7 +17,6 @@ Let $n > 1$ be an integer. Then n has no prime divisor less than or equal to $\s
 ```
 
 ```{prf:proof}
-:class: dropdown
 
 If $n$ is composite, then $n = ab$ where $a > 1$ and $b > 1$. For convenience suppose $a\le b$. 
 

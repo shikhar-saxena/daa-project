@@ -8,7 +8,6 @@
 # ```
 # 
 # ```{prf:proof}
-# :class: dropdown
 # 
 # If $n$ is composite, then $n = ab$ where $a > 1$ and $b > 1$. For convenience suppose $a\le b$. 
 # 
