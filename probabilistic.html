@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Probabilistic Primality Testing &#8212; Algorithm Analysis and Design Project</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fermat’s Test" href="fermat-test.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="sieve.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Algorithm Analysis and Design Project</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="prelim.html">
+   Prelimnaries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trial-division.html">
+   Trial Division Test
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Probabilistic Primality Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="fermat-test.html">
+   Fermat’s Test
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/probabilistic.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Fprobabilistic.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="probabilistic-primality-testing">
+<h1>Probabilistic Primality Testing<a class="headerlink" href="#probabilistic-primality-testing" title="Permalink to this headline">¶</a></h1>
+<p>Probabilistic tests are randomized algorithms. They are more rigorous in that they provide provable bounds on the probability of being fooled by a composite number.</p>
+<p>Many popular primality tests are probabilistic tests. These tests use, apart from the tested number <span class="math notranslate nohighlight">\(n\)</span>, some other numbers <span class="math notranslate nohighlight">\(a\)</span> which are chosen at random from some sample space.</p>
+<p>The usual randomized primality tests never report a prime number as composite, but it is possible for a composite number to be reported as prime. The probability of error can be reduced by repeating the test with several independently chosen values of <span class="math notranslate nohighlight">\(a\)</span>; for example, for any composite <span class="math notranslate nohighlight">\(n\)</span> if at least half the <span class="math notranslate nohighlight">\(a\)</span>’s detect <span class="math notranslate nohighlight">\(n\)</span>’s compositeness, so with <span class="math notranslate nohighlight">\(k\)</span> repetitions, we can reduce the error probability to at most <span class="math notranslate nohighlight">\(2^{-k}\)</span>, which can be made arbitrarily small by increasing <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>The basic structure of randomized primality tests is as follows:</p>
+<ul class="simple">
+<li><p>Randomly pick a number <span class="math notranslate nohighlight">\(a\)</span>.</p></li>
+<li><p>Check equality (corresponding to the chosen test) involving <span class="math notranslate nohighlight">\(a\)</span> and the given number <span class="math notranslate nohighlight">\(n\)</span>. If the equality fails to hold true, then <span class="math notranslate nohighlight">\(n\)</span> is a composite number and <span class="math notranslate nohighlight">\(a\)</span> is a witness for the compositeness, and the test stops.</p></li>
+<li><p>Get back to the step one until the required accuracy is reached.</p></li>
+</ul>
+<p>After one or more iterations, if <span class="math notranslate nohighlight">\(n\)</span> is not found to be a composite number, then it can be declared probably prime.</p>
+<!-- !!!
+As we have seen in the previous two sections it is theoretically very straightforward,
+using either the direct method of trial division or the sieve of Eratosthenes, to test an
+integer for primality. The problem is that for large integers $n$ these methods become
+computationally intractable if not almost impossible. Hence direct trial division and
+the sieve of Eratosthenes can be used only for relatively small integers, and therefore
+for large integers other methods must be employed. We should note before going
+further that the concepts of small and large are very relative in number theory to
+the type of computing machinery one is using. Numbers as large as 10,000,000,000
+can be tested very easily, even on small computers, using the sieve of Eratosthenes.
+In terms of computational asymptotic number theory, 109 is still small. Similarly,
+for human computation the total number of atoms in the universe is massive. This
+number is estimated as being on the order of 1079. However, 79 digit integers are
+considered only moderate in asymptotic computational number theory, which may
+want to handle integers with hundreds or even thousands of digits. Therefore what is
+needed are tests for primality that will handle some of these gigantic integers.
+A primality test is then an algorithm that inputs a positive integer n and outputs
+whether it is prime or composite. These tests can be sub-classified as either deterministic primality tests or probabilistic primality tests. In a deterministic test an
+integer n is inputted and the output is, yes the integer is prime, or no the integer is not
+prime. Hence both the direct method of trial division and the sieve of Eratosthenes
+are deterministic tests. A nondeterministic primality test takes an inputted integer n and returns either no it
+is not prime or it may be a prime. A probabilistic primality test is a nondeterministic
+test that returns either that the inputted integer is not a prime or that is probably a
+prime to some given degree of likelihood. There are various tests (that we will look
+at in the next section) that can give this likelihood to as high a probability as desired.
+Numbers that pass a probabilistic primality test are called probable primes. For use
+in cryptography, knowing whether an integer is prime to a high probability is often
+just as good as knowing if it is definitely prime. For this reason, probable primes with
+a high degree of probability are called industrial grade primes, a term originally
+coined by M. Cohen. --></div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="sieve.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">&lt;no title&gt;</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="fermat-test.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Fermat’s Test</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Shikhar Saxena (2021121010)<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
