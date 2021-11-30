@@ -52,10 +52,11 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Fermat’s Test" href="fermat-test.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="sieve.html" />
+    <link rel="prev" title="Trial Division Test" href="trial-division.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -86,30 +87,47 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="prelim.html">
    Introduction
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="prelim.html">
-   Prelimnaries
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="trial-division.html">
    Trial Division Test
   </a>
  </li>
- <li class="toctree-l1 current active">
+ <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
    Probabilistic Primality Testing
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="fermat-test.html">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="miller-rabin.html">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="fermat-test.html">
-   Fermat’s Test
+  <a class="reference internal" href="aks.html">
+   AKS Primality Test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rsa.html">
+   RSA
   </a>
  </li>
 </ul>
@@ -164,22 +182,6 @@
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Fprobabilistic.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -194,6 +196,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#note-on-randomized-algorithms">
+   Note on Randomized Algorithms
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -214,36 +229,18 @@
 <li><p>Get back to the step one until the required accuracy is reached.</p></li>
 </ul>
 <p>After one or more iterations, if <span class="math notranslate nohighlight">\(n\)</span> is not found to be a composite number, then it can be declared probably prime.</p>
-<!-- !!!
-As we have seen in the previous two sections it is theoretically very straightforward,
-using either the direct method of trial division or the sieve of Eratosthenes, to test an
-integer for primality. The problem is that for large integers $n$ these methods become
-computationally intractable if not almost impossible. Hence direct trial division and
-the sieve of Eratosthenes can be used only for relatively small integers, and therefore
-for large integers other methods must be employed. We should note before going
-further that the concepts of small and large are very relative in number theory to
-the type of computing machinery one is using. Numbers as large as 10,000,000,000
-can be tested very easily, even on small computers, using the sieve of Eratosthenes.
-In terms of computational asymptotic number theory, 109 is still small. Similarly,
-for human computation the total number of atoms in the universe is massive. This
-number is estimated as being on the order of 1079. However, 79 digit integers are
-considered only moderate in asymptotic computational number theory, which may
-want to handle integers with hundreds or even thousands of digits. Therefore what is
-needed are tests for primality that will handle some of these gigantic integers.
-A primality test is then an algorithm that inputs a positive integer n and outputs
-whether it is prime or composite. These tests can be sub-classified as either deterministic primality tests or probabilistic primality tests. In a deterministic test an
-integer n is inputted and the output is, yes the integer is prime, or no the integer is not
-prime. Hence both the direct method of trial division and the sieve of Eratosthenes
-are deterministic tests. A nondeterministic primality test takes an inputted integer n and returns either no it
-is not prime or it may be a prime. A probabilistic primality test is a nondeterministic
-test that returns either that the inputted integer is not a prime or that is probably a
-prime to some given degree of likelihood. There are various tests (that we will look
-at in the next section) that can give this likelihood to as high a probability as desired.
-Numbers that pass a probabilistic primality test are called probable primes. For use
-in cryptography, knowing whether an integer is prime to a high probability is often
-just as good as knowing if it is definitely prime. For this reason, probable primes with
-a high degree of probability are called industrial grade primes, a term originally
-coined by M. Cohen. --></div>
+<div class="section" id="note-on-randomized-algorithms">
+<h2>Note on Randomized Algorithms<a class="headerlink" href="#note-on-randomized-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>Often times no efficient deterministic algorithm is known to a problem. This is when randomized algorithms are useful.</p>
+<p>In randomized algorithms, we essentially take some random step as our next step. At first glance it seems haphazard because the algorithm does not know what to run beforehand and it may not be useful. But Randomized algorithms are far from this and are often useful. Rather than viewing it from the designer’s perspective we view it from the adversaries’ perspective (i.e., what sort of input can be the worst case input). Since its a randomized algorithm, the notion of worst case input is difficult to pinpoint. That’s why randomized algorithms can be useful.</p>
+<p>Example: Quick sort</p>
+<p>If we choose a deterministic quick sort we can always give an input which does not split the input evenly in the recursion step and can take <span class="math notranslate nohighlight">\(O(n^2)\)</span>. Rather if we take a random pivot each time (randomized quick sort) it may become more efficient i.e, <span class="math notranslate nohighlight">\(O(n log n)\)</span>.</p>
+<p>We can also understand randomized algorithms this way:</p>
+<p>We create several efficient algorithms for the problem <span class="math notranslate nohighlight">\(A_1, A_2, ..., A_k\)</span> such that for any input there are at least <span class="math notranslate nohighlight">\(2k/3\)</span> values of <span class="math notranslate nohighlight">\(i\)</span> such that the algorithm <span class="math notranslate nohighlight">\(A_i\)</span> correctly solves the problem. So for any input atleast two-thirds of our set of algorithms will be able to solve the problem. This way however we may not terminate unless we compute each algorithm in our set. So we choose three algorithms randomly from the set and take the majority solution.</p>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -275,11 +272,11 @@ coined by M. Cohen. --></div>
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="sieve.html" title="previous page">
+        <a class="left-prev" href="trial-division.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title">Trial Division Test</p>
             </div>
         </a>
     </div>

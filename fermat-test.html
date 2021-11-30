@@ -52,9 +52,10 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="lehmer-test.html" />
+    <link rel="next" title="Miller-Rabin Primality Test" href="miller-rabin.html" />
     <link rel="prev" title="Probabilistic Primality Testing" href="probabilistic.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -86,30 +87,47 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="prelim.html">
    Introduction
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="prelim.html">
-   Prelimnaries
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="trial-division.html">
    Trial Division Test
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="probabilistic.html">
    Probabilistic Primality Testing
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="miller-rabin.html">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Fermat’s Test
+ <li class="toctree-l1">
+  <a class="reference internal" href="aks.html">
+   AKS Primality Test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rsa.html">
+   RSA
   </a>
  </li>
 </ul>
@@ -164,22 +182,6 @@
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Ffermat-test.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -194,6 +196,24 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Fermat’s Test
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-euler-test">
+   The Euler Test
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -206,20 +226,81 @@
 <h1>Fermat’s Test<a class="headerlink" href="#fermat-s-test" title="Permalink to this headline">¶</a></h1>
 <p>Fermat’s Little Theorem allows us to prove that a number is composite without actually factoring it.</p>
 <div class="proof theorem admonition" id="theorem-0">
-<p class="admonition-title"><span class="caption-number">Theorem 3 </span> (Euler’s theorem)</p>
+<p class="admonition-title"><span class="caption-number">Theorem 3 </span> (Fermat’s Little Theorem)</p>
 <div class="theorem-content section" id="proof-content">
-<p>If <span class="math notranslate nohighlight">\((a, n) = 1\)</span> then</p>
-<div class="math notranslate nohighlight">
-\[a^{\phi(n)} \equiv 1 \text{ mod } n\]</div>
-</div>
-</div><div class="proof corollary admonition" id="corollary-1">
-<p class="admonition-title"><span class="caption-number">Corollary 1 </span> (Fermat’s Little Theorem)</p>
-<div class="corollary-content section" id="proof-content">
 <p>If <span class="math notranslate nohighlight">\(p\)</span> is prime and <span class="math notranslate nohighlight">\((p, a) = 1\)</span> then</p>
 <div class="math notranslate nohighlight">
 \[a^{p - 1} \equiv 1 \text{ mod } p\]</div>
 </div>
-</div></div>
+</div><div class="proof admonition" id="proof">
+<p>Proof. We assume <span class="math notranslate nohighlight">\(i \in {1,2,..., p - 1}\)</span>.</p>
+<p>The numbers <span class="math notranslate nohighlight">\(a\cdot i\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> are distinct because if <span class="math notranslate nohighlight">\(a\cdot i \equiv a\cdot j\)</span> (mod <span class="math notranslate nohighlight">\(p\)</span>) then dividing both sides by <span class="math notranslate nohighlight">\(a\)</span> gives <span class="math notranslate nohighlight">\(i \equi j (mod p)\)</span>. They are nonzero because <span class="math notranslate nohighlight">\(a\cdot i \equiv 0\)</span> similarly implies <span class="math notranslate nohighlight">\(i \equiv 0\)</span>. (and we can divide by <span class="math notranslate nohighlight">\(a\)</span> so we assume <span class="math notranslate nohighlight">\(a\)</span> is nonzero and therefore relatively prime to <span class="math notranslate nohighlight">\(p\)</span>).</p>
+<p>Thus, both the sets <span class="math notranslate nohighlight">\(\{1,2,\ldots, p - 1\}\)</span> and <span class="math notranslate nohighlight">\(\{a \cdot 1\)</span> mod <span class="math notranslate nohighlight">\(p, a \cdot 2\)</span> mod <span class="math notranslate nohighlight">\(p,\ldots, a \cdot (p - 1)\)</span> mod <span class="math notranslate nohighlight">\(p\}\)</span> are equal.</p>
+<p>If we multiply together the elements in each of these representations we get</p>
+<div class="math notranslate nohighlight">
+\[(p - 1)! \equiv a^{p - 1} \cdot (p - 1)! (\text{mod } p)\]</div>
+<p>Dividing each side by <span class="math notranslate nohighlight">\((p - 1)!\)</span> we get the proof to our theorem.</p>
+</div>
+<div class="proof remark admonition" id="remark-1">
+<p class="admonition-title"><span class="caption-number">Remark 1 </span></p>
+<div class="remark-content section" id="proof-content">
+<p>An important thing to note is that the <em>inverse</em> of Fermat’s Little Theorem is not always true i.e., if <span class="math notranslate nohighlight">\(a^{n−1} \equiv 1 (\text{mod } n)\)</span> for some <span class="math notranslate nohighlight">\(a\)</span> with <span class="math notranslate nohighlight">\(a \not \equiv 0 (\text{mod } n)\)</span>, then <span class="math notranslate nohighlight">\(n\)</span> might not be prime.</p>
+<p>Such numbers are known as <em><strong>Fermat pseudoprimes</strong></em>.</p>
+</div>
+</div><div class="proof example admonition" id="example-2">
+<p class="admonition-title"><span class="caption-number">Example 1 </span></p>
+<div class="example-content section" id="proof-content">
+<div class="math notranslate nohighlight">
+\[2^{340} \equiv 1 (mod 341)\]</div>
+<p>but <span class="math notranslate nohighlight">\(341 = 11\cdot 31\)</span> which is composite.</p>
+<p>We say that <span class="math notranslate nohighlight">\(341\)</span> is a Fermat pseudoprime (to the base <span class="math notranslate nohighlight">\(2\)</span>).</p>
+</div>
+</div><p>Another thing to note is that it is even possible for <span class="math notranslate nohighlight">\(a^{n−1} \equiv 1\)</span> (mod <span class="math notranslate nohighlight">\(n\)</span>) to hold for every <span class="math notranslate nohighlight">\(a\)</span> with <span class="math notranslate nohighlight">\((a,n) = 1\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is composite. This occurs if <span class="math notranslate nohighlight">\(n\)</span> is a <strong>Carmichael number</strong> (also called an absolute <em>Fermat pseudoprime</em>).</p>
+<p>Carmichael numbers are fairly rare but some examples are <span class="math notranslate nohighlight">\(561, 1105, 1729,\)</span> and so on.
+For a randomly chosen odd integer n with 100 to 300 digits, the probability that <span class="math notranslate nohighlight">\(n\)</span> is a Carmichael number appears to be exceedingly
+low.</p>
+<p>If <span class="math notranslate nohighlight">\(n\)</span> is composite and not a Carmichael number, then there are at most <span class="math notranslate nohighlight">\(\phi(n)/2\)</span> values of <span class="math notranslate nohighlight">\(a\)</span> (<span class="math notranslate nohighlight">\(1 \le a \le n\)</span>) for which Fermat’s little Theorem holds. Which means that the probability of error for any test case <span class="math notranslate nohighlight">\(a\)</span> is atmost half.</p>
+<p>The Fermat’s Test is summarized as follows:</p>
+<div class="proof algorithm admonition" id="algorithm-3">
+<p class="admonition-title"><span class="caption-number">Algorithm 2 </span></p>
+<div class="algorithm-content section" id="proof-content">
+<p><strong>Input:</strong> n &gt; 1</p>
+<ol class="simple">
+<li><p>for <span class="math notranslate nohighlight">\(i = 1\)</span> to <span class="math notranslate nohighlight">\(k\)</span> do
+1. choose random <span class="math notranslate nohighlight">\(a \ni 2 \le a \le n − 1\)</span>.
+2. if <span class="math notranslate nohighlight">\(a^{n} \not \equiv a (mod n)\)</span>, return COMPOSITE.
+4: return PROBABLY PRIME.</p></li>
+</ol>
+</div>
+</div><p>We can improve upon the limitations of Fermat’s test by further restricting the test-condition.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="the-euler-test">
+<h1>The Euler Test<a class="headerlink" href="#the-euler-test" title="Permalink to this headline">¶</a></h1>
+<p>If <span class="math notranslate nohighlight">\(n\)</span> is an odd prime, we know that an integer can have at most two square roots, mod n. In particular, the only square roots of 1 (mod n)
+are ±1.
+If a ≡/ 0 (mod n), a(n−1)/2 is a square root of a(n−1) ≡ 1 (mod n), so
+a(n−1)/2 ≡ ±1 (mod n).
+If a(n−1)/2 ≡/ ±1 (mod n) for some a with a ≡/ 0 (mod n), then n is
+composite.
+Euler Test: For a randomly chosen a with a ≡/ 0 (mod n), compute
+a(n−1)/2 (mod n).
+i) If a(n−1)/2 ≡ ±1 (mod n), declare n a probable prime, and
+optionally repeat the test a few more times.
+If n is large and chosen at random, the probability that n is
+prime is very close to 1.
+ii) If a(n−1)/2 ≡/ ±1 (mod n), declare n composite.
+This is always correct.
+The Euler test is more powerful than the Fermat test.
+If the Fermat test finds that n is composite, so does the Euler test.
+But the Euler test may find n composite even when the Fermat test
+fails. Why?
+If n is an odd composite integer (other than a prime power),
+1 has at least 4 square roots mod n.
+So we can have a(n−1)/2 ≡ β (mod n), where β ≠ ±1 is a square
+root of 1. Then an−1 ≡ 1 (mod n). In this situation, the Fermat
+Test (incorrectly) declares n a probable prime, but the Euler
+test (correctly) declares n composite</p>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -260,10 +341,10 @@
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="lehmer-test.html" title="next page">
+        <a class="right-next" href="miller-rabin.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title">Miller-Rabin Primality Test</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

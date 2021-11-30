@@ -1,48 +1,17 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
-
 # Trial Division Test
 
 **Trial Division** is the most laborious yet easiest to understand of the integer factorization algorithms.
 
-### Method
+## Method
 
-Given an integer $n$, the trial division consists of sequentially testing whether $n$ is divisible by any smaller number. Clearly, it is only worthwhile to test factors less than $n$, and in order from two upwards (since two is the first prime number). With this ordering, there is no point in testing for divisibility by four if the number has already been determined not divisible by two, and so on for three and any multiple of three, etc. Therefore, the effort can be reduced by selecting only prime numbers as test divisors. Furthermore, the test divisors need go no further than $\sqrt {n}$ because, if $n$ is divisible by some number $p$, then $n = p \times q$ and if $q$ were smaller than $p$, $n$ would have been detected earlier as being divisible by $q$ or by a prime factor of $q$.
+Given an integer $n$, the trial division consists of sequentially testing whether $n$ is divisible by any smaller number. So for a small number, we can use the same approach to factor the number as well.
 
-We can augment trial division test to do primality testing as follows: 
+The choice of trial divisors is not fixed. A loose upper bound is to check till $n - 1$ or we can bring it down to $n/2$ since if $n$ is composite then $n = ab$ where if $a > n/2$ then we have already checked whether $n$ is divisible by $b$. To speed things up even further, we may exploit the fact that after 2, we can skip the other even numbers. So, 2 and the odd numbers may be used as trial divisors.
 
-**Factor $n$ using trial division test. $n$ is prime if and only if none of the trial divisors divides n.**
-
-
-It is not necessary that the trial divisors be all primes. To speed things up, however we may exploit the fact that after 2, we can skip the other even numbers. So, 2 and the odd numbers may be used as trial divisors.
-
-
-
-<!-- An integer n is composite if n > 1 and n is not
-prime. (The number 1 is considered neither prime nor composite.) Thus,
-an integer n is composite if and only if it admits a nontrivial factorization
-n = ab, where a, b are integers, each strictly between 1 and n. Though the
-definition of primality is exquisitely simple, the resulting sequence 2, 3, 5, 7,...
-of primes will be the highly nontrivial collective object of our attention. The
-wonderful properties, known results, and open conjectures pertaining to the
-primes are manifold. We shall cover some of what we believe to be theoretically
-interesting, aesthetic, and practical aspects of the primes. Along the way,
-we also address the essential problem of factorization of composites, a field
-inextricably entwined with the study of the primes themselves.
-In the remainder of this chapter we shall introduce our cast of characters,
-the primes themselves, and some of the lore that surrounds them. -->
+As a slightly tighter upper bound we only need to check upto $\sqrt{n}$ which can be proved by the following theorem. 
 
 ```{prf:theorem}
-Let $n > 1$ be an integer. Then $n$ has no prime divisor less than or equal to $\sqrt{n}$ if and only if $n$ is prime.
+If $n > 1$ is composite, then $n$ has a prime divisor $p$ such that $p \le \sqrt{n}$
 ```
 
 `````{prf:proof}
@@ -58,15 +27,55 @@ p^2 \le a^2 \le ab = n
 Since, $p | a$ and $a | n$ we have $p | n$.
 `````
 
-## Divisibility Test
+Therefore, the algorithm can be summarized as follows:
 
-A divisibility test is a procedure applied to a number $n$ so as to determine whether $n$ is divisible by a particular small number or not. 
+```{prf:algorithm}
+**Input:** Integer $n > 1$
 
-From a computational point of view, checking if $n$ is divisible by a number $p$ can be achieved by dividing $n$ by $p$ and getting the quotient and remainder. For remainder being 0, the number is said to be divisible and $p$ is said to be a *factor* of $n$.
+1. If $2 | n$ return COMPOSITE
+2. Take $k = 3$
+3. while $k^2 \le n$ do
+  1. if $k | n$ return COMPOSITE
+  2. else $k = k + 2$ and repeat the loop
+4. return PRIME
+```
 
-**Trial Division** is the most laborious but easiest to understand of the integer factorization algorithms.
+We can also use sieving techniques, that way our trial divisors will only be the prime numbers upto $\sqrt{n}$.
 
-We sequentially check whether *n* is divisible or not by the members of the set of trial divisors for *n*. 
- <!--TODO: FIXME:  -->
+## Theoretical Considerations
 
-It is not necessary that the trial divisors be all primes. To speed things up, however we may exploit the fact that after 2, we can skip the other even numbers. So, 2 and the odd numbers may be used as trial divisors.
+Suppose we wish to use trial division to test $n$ for primality. 
+
+The worst case running time is when $n$ is prime and we must try all potential divisors i.e., the numbers up to $\sqrt{n}$. If we are using just primes as trial divisors, the number of divisions is about $2 \frac{\sqrt{n}}{ln n}$.
+
+<!--  -->
+
+If we use 2 and the odd numbers as trial divisors, the number of
+divisions is about 1
+2
+√n. 
+
+So this is the running time for trial division as a primality test. What is its
+complexity as an algorithm to obtain the complete factorization of n when n is
+composite? The worst case is still about √n, for just consider the numbers that
+are the double of a prime. We can also ask for the average case complexity for
+factoring composites. Again, it is almost √n, since the average is dominated
+by those composites that have a very large prime factor. But such numbers are
+rare. It may be interesting to throw out the 50% worst numbers and compute
+the average running time for trial division to completely factor the remaining
+numbers. This turns out to be nc, where c = 1/(2√e) ≈ 0.30327; see Exercise
+3.5.
+As we shall see later in this chapter and in the next chapter, the problem
+of recognizing primes is much easier than the general case of factorization. In
+particular, we have much better ways than trial division to recognize primes.
+Thus, if one uses trial division as a factorization method, one should augment
+it with a faster primality test whenever a new unfactored portion of n is
+discovered, so that the last bit of trial division may be skipped when the
+last part turns out to be prime. So augmenting trial division, the time to
+completely factor a composite n essentially is the square root of the second
+largest prime factor of n.
+Again the average is dominated by a sparse set of numbers, in this case
+those numbers that are the product of two primes of the same order of
+magnitude; the average being about √n. But now throwing out the 50% worst
+numbers gives a smaller estimate for the average of the remaining numbers.
+It is nc, where c ≈ 0.23044.
