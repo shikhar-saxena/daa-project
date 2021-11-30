@@ -2,16 +2,17 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
+root: prelim 
 chapters:
-# - file: markdown
-# - file: notebooks
-- file: prelim
-- file: trial-division
-- file: sieve
+- file: trial-division #########
+# - file: sieve #########
 - file: probabilistic
-- file: ecpp
-- file: aks
-- file: rsa
-- file: greedy
-- file: dp
+  sections:
+  - file: fermat-test ########
+  # - file: lehmer-test #########
+  - file: miller-rabin #########
+  # - file: solovay-strassen #########
+- file: aks ############
+- file: rsa ########
+# - file: greedy #######
+# - file: dp ########

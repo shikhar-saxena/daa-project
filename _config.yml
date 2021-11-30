@@ -19,6 +19,9 @@ latex:
 # bibtex_bibfiles:
   # - references.bib
 
+# Auto-exclude files not in the toc
+only_build_toc_files: false
+
 # Information about where the book exists on the web
 repository:
   url: https://github.com/shikhar-saxena/daa-project  # Online location of your book
@@ -28,8 +31,10 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
-  use_issues_button: true
-  use_repository_button: true
+  favicon: ico.png
+  use_multitoc_numbering: true
+  # use_issues_button: true
+  # use_repository_button: true
 
 sphinx:
   extra_extensions:

@@ -43,6 +43,7 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
 
@@ -82,20 +83,47 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="prelim.html">
    Introduction
   </a>
  </li>
 </ul>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="prelim.html">
-   Prelimnaries
+  <a class="reference internal" href="trial-division.html">
+   Trial Division Test
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="probabilistic.html">
+   Probabilistic Primality Testing
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="fermat-test.html">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="miller-rabin.html">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="aks.html">
+   AKS Primality Test
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="trial-division.html">
-   Trial Division Test
+  <a class="reference internal" href="rsa.html">
+   GCD
   </a>
  </li>
 </ul>
@@ -133,22 +161,6 @@
             
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Fprf-prf.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -175,10 +187,128 @@
    <h1>Proof Index</h1>
 
    <div class="modindex-jumpbox">
-   <a href="#cap-theorem-0"><strong>theorem-0</strong></a>
+   <a href="#cap-algorithm-1"><strong>algorithm-1</strong></a> | 
+   <a href="#cap-algorithm-3"><strong>algorithm-3</strong></a> | 
+   <a href="#cap-algorithm-4"><strong>algorithm-4</strong></a> | 
+   <a href="#cap-definition-0"><strong>definition-0</strong></a> | 
+   <a href="#cap-definition-1"><strong>definition-1</strong></a> | 
+   <a href="#cap-definition-4"><strong>definition-4</strong></a> | 
+   <a href="#cap-definition-5"><strong>definition-5</strong></a> | 
+   <a href="#cap-definition-7"><strong>definition-7</strong></a> | 
+   <a href="#cap-example-2"><strong>example-2</strong></a> | 
+   <a href="#cap-lemma-0"><strong>lemma-0</strong></a> | 
+   <a href="#cap-lemma-2"><strong>lemma-2</strong></a> | 
+   <a href="#cap-lemma-6"><strong>lemma-6</strong></a> | 
+   <a href="#cap-remark-1"><strong>remark-1</strong></a> | 
+   <a href="#cap-theorem-0"><strong>theorem-0</strong></a> | 
+   <a href="#cap-theorem-3"><strong>theorem-3</strong></a>
    </div>
 
    <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-algorithm-1"><td></td><td>
+       <strong>algorithm-1</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="trial-division.html#algorithm-1"><code class="xref">algorithm-1</code></a> <em>(trial-division)</em></td><td>
+       <em>algorithm</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-algorithm-3"><td></td><td>
+       <strong>algorithm-3</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fermat-test.html#algorithm-3"><code class="xref">algorithm-3</code></a> <em>(fermat-test)</em></td><td>
+       <em>algorithm</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-algorithm-4"><td></td><td>
+       <strong>algorithm-4</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fermat-test.html#algorithm-4"><code class="xref">algorithm-4</code></a> <em>(fermat-test)</em></td><td>
+       <em>algorithm</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-definition-0"><td></td><td>
+       <strong>definition-0</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#definition-0"><code class="xref">definition-0</code></a> <em>(prelim)</em></td><td>
+       <em>definition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-definition-1"><td></td><td>
+       <strong>definition-1</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#definition-1"><code class="xref">definition-1</code></a> <em>(prelim)</em></td><td>
+       <em>definition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-definition-4"><td></td><td>
+       <strong>definition-4</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#definition-4"><code class="xref">definition-4</code></a> <em>(prelim)</em></td><td>
+       <em>definition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-definition-5"><td></td><td>
+       <strong>definition-5</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#definition-5"><code class="xref">definition-5</code></a> <em>(prelim)</em></td><td>
+       <em>definition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-definition-7"><td></td><td>
+       <strong>definition-7</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#definition-7"><code class="xref">definition-7</code></a> <em>(prelim)</em></td><td>
+       <em>definition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-example-2"><td></td><td>
+       <strong>example-2</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fermat-test.html#example-2"><code class="xref">example-2</code></a> <em>(fermat-test)</em></td><td>
+       <em>example</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-lemma-0"><td></td><td>
+       <strong>lemma-0</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="aks.html#lemma-0"><code class="xref">lemma-0</code></a> <em>(aks)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-lemma-2"><td></td><td>
+       <strong>lemma-2</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#lemma-2"><code class="xref">lemma-2</code></a> <em>(prelim)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-lemma-6"><td></td><td>
+       <strong>lemma-6</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#lemma-6"><code class="xref">lemma-6</code></a> <em>(prelim)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-remark-1"><td></td><td>
+       <strong>remark-1</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fermat-test.html#remark-1"><code class="xref">remark-1</code></a> <em>(fermat-test)</em></td><td>
+       <em>remark</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-theorem-0"><td></td><td>
        <strong>theorem-0</strong></td><td></td></tr>
@@ -186,6 +316,14 @@
        <td></td>
        <td>
        <a href="trial-division.html#theorem-0"><code class="xref">theorem-0</code></a> <em>(trial-division)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-theorem-3"><td></td><td>
+       <strong>theorem-3</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="prelim.html#theorem-3"><code class="xref">theorem-3</code></a> <em>(prelim)</em></td><td>
        <em>theorem</em></td></tr>
    </table>
 

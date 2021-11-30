@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; Algorithm Analysis and Design Project</title>
+    <title>GCD &#8212; Algorithm Analysis and Design Project</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -43,6 +43,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -50,10 +52,10 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="greedy.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="aks.html" />
+    <link rel="prev" title="AKS Primality Test" href="aks.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -84,20 +86,47 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="prelim.html">
    Introduction
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="prelim.html">
-   Prelimnaries
-  </a>
- </li>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="trial-division.html">
    Trial Division Test
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="probabilistic.html">
+   Probabilistic Primality Testing
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="fermat-test.html">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="miller-rabin.html">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="aks.html">
+   AKS Primality Test
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   GCD
   </a>
  </li>
 </ul>
@@ -152,22 +181,6 @@
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Frsa.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -186,7 +199,101 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   GCD
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#naive-school-way">
+     Naive (school) way
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#euclid-s-algorithm">
+     Euclid’s Algorithm
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#analysis">
+       Analysis
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#extended-euclid-s-algorithm">
+     Extended Euclid’s Algorithm
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#how-to-find-such-x-and-y">
+       How to find such x and y?
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#algorithm">
+       Algorithm
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modular-inversion">
+   Modular Inversion
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#modular-division-theorem">
+     Modular division theorem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#public-key-cryptography">
+   Public Key cryptography
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ease-speed-of-operation-depends-on-representation">
+     Ease/Speed of operation depends on representation
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rsa-cryptosystem">
+     RSA Cryptosystem
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rsa">
+     RSA
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rsa-correctness">
+       RSA Correctness
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#fermat-s-little-theorem">
+         Fermat’s little theorem
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rsa-correctness-revisited">
+       RSA correctness revisited
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
 </ul>
 
             </nav>
@@ -198,7 +305,166 @@
         
               <div>
                 
-  
+  <div class="section" id="gcd">
+<h1>GCD<a class="headerlink" href="#gcd" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="naive-school-way">
+<h2>Naive (school) way<a class="headerlink" href="#naive-school-way" title="Permalink to this headline">¶</a></h2>
+<p>We factorize the two given integers a and b (given <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&gt;=</span> <span class="pre">b</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>). We take the common factors of both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> and compute the GCD. But this method is not feasible implementation-wise because factorization is not yet known to be in P class.</p>
+<p>The fastest algorithms for factoring <code class="docutils literal notranslate"><span class="pre">a</span></code> are super-polynomial in input size i.e., <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">a</span></code>.</p>
+<p>Euclid’s algorithm suggests an approach where we do not need to compute factorization of both numbers and can compute the GCD in rather linear time.</p>
+</div>
+<div class="section" id="euclid-s-algorithm">
+<h2>Euclid’s Algorithm<a class="headerlink" href="#euclid-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Euclid’s algorithm is a simple algorithm stated as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">Euclid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> 
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">Two</span> <span class="n">integers</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span> <span class="k">with</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="n">Output</span><span class="p">:</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="n">a</span>
+<span class="k">return</span> <span class="n">Euclid</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>This algorithm is based on the divide and conquer paradigm (the property used here for recursion is proved later). In Euclid’s algorithm we see, that we reduce the second operand (because <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">mod</span> <span class="pre">b</span></code> will always be less than <code class="docutils literal notranslate"><span class="pre">b</span></code>). Eventually the second operand will turn 0 which is our base case i.e., GCD(a, 0) is a (since 0 is divisible by any number).</p>
+<p>Thus the reduction of 2nd operand eventually leads the algorithm to terminate. Analysis of this algorithm is shown later.</p>
+<p>The property used for recursion is stated as follows:</p>
+<blockquote>
+<div><p>If x and y are positive integers with x &gt;= y then <code class="docutils literal notranslate"><span class="pre">gcd(x,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">mod</span> <span class="pre">y,</span> <span class="pre">y)</span></code></p>
+</div></blockquote>
+<p><strong>Proof:</strong></p>
+<p>It is enough to show the slightly simpler rule <code class="docutils literal notranslate"><span class="pre">gcd(x,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">-</span> <span class="pre">y,</span> <span class="pre">y)</span></code> from which the one stated can be derived by repeatedly subtracting y from x (since <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">mod</span> <span class="pre">y</span></code> is <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">ny</span></code> for some <code class="docutils literal notranslate"><span class="pre">n</span></code>).</p>
+<p>Any integer that divides both x and y must also divide x - y so gcd(x, y) must also be a common divisor of gcd(x - y, y). Likewise, any integer that divides both x - y and y also divides x and y. Thus, gcd(x - y, y) is also a common factor of gcd(x, y). Thus, <code class="docutils literal notranslate"><span class="pre">gcd(x,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">-</span> <span class="pre">y,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">mod</span> <span class="pre">y,</span> <span class="pre">y)</span></code></p>
+<div class="section" id="analysis">
+<h3>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h3>
+<p><strong>Lemma:</strong> If a &gt;= b then a mod b &lt; a/2.</p>
+<p><strong>Proof:</strong></p>
+<p>Either b &lt;= a/2 or b &gt; a/2. For these two cases we notice:</p>
+<ul class="simple">
+<li><p>if b &lt;= a/2 then we have a mod b &lt; b &lt;= a/2</p></li>
+<li><p>and if b &gt; a/2 then a mod b = a - b &lt; a/2</p></li>
+</ul>
+<p>So no matter the values of a and b, two steps in recursion (one comparison and one computation a mod b) our input gets halved.</p>
+<p>Therefore, for 2k steps a, will be reduced to a/2^k.</p>
+<p>Therefore total steps required will be about <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">log</span> <span class="pre">a</span></code> steps. Therefore this algorithm will work for larger numbers as well (since it is logarithmic in time).</p>
+<p>Therefore for n-bit numbers a and b it will take O(n) time which is linear in time. Thus, this algorithm is an optimum algorithm.</p>
+</div>
+</div>
+<div class="section" id="extended-euclid-s-algorithm">
+<h2>Extended Euclid’s Algorithm<a class="headerlink" href="#extended-euclid-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Extended Euclid’s algorithm solves a generalization of GCD.</p>
+<p><strong>Lemma</strong> If d divides both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">ax</span> <span class="pre">+</span> <span class="pre">by</span></code> where x and y are some integers then necessarily <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">gcd(a,</span> <span class="pre">b)</span></code>.</p>
+<p>Thus the lemma states that the number that divides both a and b, that can be expressed as their linear combination, is the gcd of the two numbers.</p>
+<p><strong>Proof</strong>: By the first two conditions d is a common divisor of a and b and so it cannot exceed the greatest common divisor, that is, <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">&lt;=</span> <span class="pre">gcd(a,</span> <span class="pre">b)</span></code>. On the other hand since gcd(a, b) is a common divisor of a and b, it must also divide <code class="docutils literal notranslate"><span class="pre">ax</span> <span class="pre">+</span> <span class="pre">by</span> <span class="pre">=</span> <span class="pre">d</span></code> which implies <code class="docutils literal notranslate"><span class="pre">gcd(a,b)</span> <span class="pre">&lt;=</span> <span class="pre">d</span></code>. So from these two inequalities we get</p>
+<p><code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">gcd(a,</span> <span class="pre">b)</span></code></p>
+<p>Therefore Extended Euclid’s algorithm tries to find such coefficients x and y so as to compute the GCD. Thus, this is a generalization of GCD. We not just find the GCD but we also find out coefficients associated with each input a and b.</p>
+<div class="section" id="how-to-find-such-x-and-y">
+<h3>How to find such x and y?<a class="headerlink" href="#how-to-find-such-x-and-y" title="Permalink to this headline">¶</a></h3>
+<p><strong>Example</strong>
+For gcd(25, 11)</p>
+<p>Euclid’s algorithm proceeds as follows</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span> <span class="o">=</span> <span class="mf">2.11</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="mi">11</span> <span class="o">=</span> <span class="mf">3.3</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">+</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Essentially gcd(25, 11) = gcd(25 mod 11, 11) = gcd(3, 11) = gcd(3, 2) = gcd(1, 2) = gcd(1, 0) = 1</p>
+</div></blockquote>
+<p>This gives us an idea to find coefficients x and y.</p>
+<p>25 can be written as a linear combination of 11 and 3 or in other words linear combination of 25 and 11 give 3. But 3 itself can be written as a  combination of 2 and 1 where 2 is given as a combination of 1 (and 0).</p>
+<p>Thus, we reach 1 as a linear combination of 25 and 11.</p>
+</div>
+<div class="section" id="algorithm">
+<h3>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">extended</span><span class="o">-</span><span class="n">Euclid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">Two</span> <span class="n">positive</span> <span class="n">integers</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span> <span class="k">with</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="n">Output</span><span class="p">:</span> <span class="n">Integers</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">d</span> <span class="n">such</span> <span class="n">that</span> <span class="n">d</span> <span class="o">=</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ax</span> <span class="o">+</span> <span class="n">by</span> <span class="o">=</span> <span class="n">d</span>
+
+<span class="k">if</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="s1">&#39;, y&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="o">=</span> <span class="n">extended</span><span class="o">-</span><span class="n">Euclid</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="p">(</span><span class="n">y</span><span class="s1">&#39;, x&#39;</span> <span class="o">-</span> \<span class="n">lfloor</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> \<span class="n">rfloor</span> <span class="n">y</span><span class="s1">&#39;, d)</span>
+</pre></div>
+</div>
+<p>Here we use the division property:
+Dividend = Quotient * Divisor + Remainder</p>
+<p>So,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">(</span>\<span class="n">lfloor</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> \<span class="n">rfloor</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span> <span class="o">+</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span> 
+<span class="ow">or</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="p">(</span>\<span class="n">lfloor</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> \<span class="n">rfloor</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Substituting this value of a mod b we can get the desired combination for a and b.</p>
+</div>
+</div>
+</div>
+<div class="section" id="modular-inversion">
+<h1>Modular Inversion<a class="headerlink" href="#modular-inversion" title="Permalink to this headline">¶</a></h1>
+<p>We say x is multiplicative inverse of a modulo N if <span class="math notranslate nohighlight">\(ax \eqiv 1 (mod N)\)</span>.</p>
+<p>This has a solution only when gcd(a, N) is 1 otherwise the remainder will never be 1 (remainder will always be a multiple of gcd).</p>
+<div class="section" id="modular-division-theorem">
+<h2>Modular division theorem<a class="headerlink" href="#modular-division-theorem" title="Permalink to this headline">¶</a></h2>
+<p>For any a mod N, a has a multiplicative inverse modulo N if and only if it is relatively prime to N. When the inverse exists it can be found in O(n^3) (n is the number of bits of N) by running extended Euclid algorithm.</p>
+<p>Thus continuing with our previous example we wish to compute 11^{-1} mod 25.
+Using extended Euclid algorithm we find that 15. 25 - 34.11 = 1.</p>
+<p>Reducing both sides modulo 25 we have <code class="docutils literal notranslate"><span class="pre">-34.11</span> <span class="pre">\equi</span> <span class="pre">1</span> <span class="pre">(mod</span>&#160; <span class="pre">25)</span></code></p>
+<p>So -34 \equi 16 mod 25 is the inverse of 11 mod 25.</p>
+</div>
+</div>
+<div class="section" id="public-key-cryptography">
+<h1>Public Key cryptography<a class="headerlink" href="#public-key-cryptography" title="Permalink to this headline">¶</a></h1>
+<p>Main Question in Public Key cryptography is if we publish our key how can we still maintain security.</p>
+<p>The answer lies in representation. The key can be represented in different ways. Thus the representation we share with the world is different from the one on our local machines.</p>
+<p>Thus, we think of two representations: public and private key which are the encryption and the decryption key respectively. The encryption algorithm runs very fast in the public key but decryption algorithm is very slow which runs faster in the private key.</p>
+<div class="section" id="ease-speed-of-operation-depends-on-representation">
+<h2>Ease/Speed of operation depends on representation<a class="headerlink" href="#ease-speed-of-operation-depends-on-representation" title="Permalink to this headline">¶</a></h2>
+<p>We can represent numbers in their prime factorization, as decimals, or as in roman numeral form.</p>
+<p><img alt="representation" src="img/representation.png" /></p>
+<p>We can write/compute product of numbers faster in prime factor representation. (Only exponent addition to compute multiplication). Thus this representation is the best for multiplication.</p>
+<p>For addition however the decimal representation is the best. Comparison for instance is moderate in decimals but slightly less moderate in prime factorization form.</p>
+<p>Roman representation on the other hand is slow in all three operations. Slowness is actually advantageous because decryption will be slow for such a representation.</p>
+<p><img alt="operation" src="img/operation.png" />.</p>
+<p>Binary representation is faster for comparison and addition but not for multiplication.</p>
+</div>
+<div class="section" id="rsa-cryptosystem">
+<h2>RSA Cryptosystem<a class="headerlink" href="#rsa-cryptosystem" title="Permalink to this headline">¶</a></h2>
+<p>So we represent the key in two forms R_1 and R_2 essentially one representation has faster encryption (public) and the other one has faster decryption (private).</p>
+<p>Here, the algorithms depend on the representation utilized for cryptography.</p>
+</div>
+<div class="section" id="rsa">
+<h2>RSA<a class="headerlink" href="#rsa" title="Permalink to this headline">¶</a></h2>
+<p>Pick any two primes p and q and let N = p * q
+For any e relatively prime to (p - 1)(q - 1) the mapping f(x) =  x^e mod N is a bijection on {0, 1, …, N-1}
+Moreover, the inverse mapping is easily realized: let d be the inverse of e modulo (p -1)(q - 1).</p>
+<p>Then for all x in {0,…, N-1}</p>
+<p><code class="docutils literal notranslate"><span class="pre">(x^e)^d</span> <span class="pre">mod</span> <span class="pre">N</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">mod</span> <span class="pre">N</span></code></p>
+<div class="section" id="rsa-correctness">
+<h3>RSA Correctness<a class="headerlink" href="#rsa-correctness" title="Permalink to this headline">¶</a></h3>
+<div class="math notranslate nohighlight">
+\[x^{ed} - x = x^{ 1 + k(p - 1)(q - 1) } - x\]</div>
+<p>This is always 0 modulo N. which we will show from Fermat’s little theorem.</p>
+<div class="section" id="fermat-s-little-theorem">
+<h4>Fermat’s little theorem<a class="headerlink" href="#fermat-s-little-theorem" title="Permalink to this headline">¶</a></h4>
+<p>If p is prime then for every 1 &lt;= a &lt; p,
+$<span class="math notranslate nohighlight">\( a^{p - 1} \equi 1 (mod p)\)</span>$</p>
+<p><strong>Proof</strong></p>
+<p>We assume <span class="math notranslate nohighlight">\(i \in {1,2,..., p - 1}\)</span>.</p>
+<p>The numbers a.i mod p are distinct because if <span class="math notranslate nohighlight">\(a.i \equi a.j (mod p)\)</span> then dividing both sides by a gives <span class="math notranslate nohighlight">\(i \equi j (mod p)\)</span>. They are nonzero because <span class="math notranslate nohighlight">\(a.i \equi 0\)</span> similarly implies <span class="math notranslate nohighlight">\(i \equi 0\)</span>. (and we can divide by a so we assume a is nonzero and therefore relatively prime to p).</p>
+<p>Thus,
+<code class="docutils literal notranslate"><span class="pre">{1,2,...,</span> <span class="pre">p</span> <span class="pre">-</span> <span class="pre">1}</span> <span class="pre">=</span> <span class="pre">{a</span> <span class="pre">.</span> <span class="pre">1</span> <span class="pre">mod</span> <span class="pre">p,</span> <span class="pre">a</span> <span class="pre">.</span> <span class="pre">2</span> <span class="pre">mod</span> <span class="pre">p,...,</span> <span class="pre">a</span> <span class="pre">.</span> <span class="pre">(p</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">mod</span> <span class="pre">p}</span></code></p>
+<p>If we multiply together its elements in each of these representations we get
+$<span class="math notranslate nohighlight">\((p - 1)! \equi a^{p - 1} . (p - 1)! (mod p)\)</span>$</p>
+<p>Dividing each side by <span class="math notranslate nohighlight">\((p - 1)!\)</span> we get the proof to our theorem.</p>
+</div>
+</div>
+<div class="section" id="rsa-correctness-revisited">
+<h3>RSA correctness revisited<a class="headerlink" href="#rsa-correctness-revisited" title="Permalink to this headline">¶</a></h3>
+<p>The second form of the expression is convenient when simplified using Fermat’s theorem. It is divisible by p (since <span class="math notranslate nohighlight">\(x^{p - 1} \equi 1 mod p\)</span>) and likewise by q. Since p and q are primes, this expression thus becomes divisible by their product N. Hence, RSA is proved.</p>
+</div>
+</div>
+</div>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -233,19 +499,10 @@
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title">AKS Primality Test</p>
             </div>
         </a>
     </div>
-     <div id="next">
-        <a class="right-next" href="greedy.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
 
 </div>
         

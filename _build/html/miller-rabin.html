@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Miller-Rabin Primality Test &#8212; Algorithm Analysis and Design Project</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AKS Primality Test" href="aks.html" />
+    <link rel="prev" title="Fermat’s Test" href="fermat-test.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Algorithm Analysis and Design Project</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="prelim.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="trial-division.html">
+   Trial Division Test
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="probabilistic.html">
+   Probabilistic Primality Testing
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="fermat-test.html">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="aks.html">
+   AKS Primality Test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rsa.html">
+   GCD
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/miller-rabin.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#proof">
+   Proof
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#for-composite-numbers">
+   For Composite Numbers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Proof
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="miller-rabin-primality-test">
+<h1>Miller-Rabin Primality Test<a class="headerlink" href="#miller-rabin-primality-test" title="Permalink to this headline">¶</a></h1>
+<p>Prime = “On input p:</p>
+<ol class="simple">
+<li><p>If p is even, accept if p = 2; otherwise reject.</p></li>
+<li><p>Select <span class="math notranslate nohighlight">\(a_1, a_2, ..., a_k\)</span> randomly in <span class="math notranslate nohighlight">\(Z_p^+\)</span>.</p></li>
+<li><p>For each i from 1 to k:</p></li>
+<li><p>Compute <span class="math notranslate nohighlight">\(a_i^{p - 1}\)</span> mod p and reject if different from 1.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(p - 1 = st\)</span> where s is odd and <span class="math notranslate nohighlight">\(t = 2^h\)</span> is a power of 2</p></li>
+<li><p>Compute the sequence <span class="math notranslate nohighlight">\(a_i^{s 2^0}, a_i^{s 2^1},..., a_i^{s 2^h}\)</span> modulo p.</p></li>
+<li><p>If some element of this sequence is not 1 find the last element that is not 1 and reject if that element is not -1.</p></li>
+<li><p>All tests have passed at this point so accept.”</p></li>
+</ol>
+<p>There’s a very less probable chance that the number is composite and the algorithm accepts it as prime.</p>
+<p>In step <code class="docutils literal notranslate"><span class="pre">4</span></code> we know by Fermat’s Little Theorem, that for prime numbers the remainder will be 1. Of course there can be composite numbers with remainder as 1 (for which we do the further steps). Thus, here we eliminate the number if its remainder is not 1.</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">p</span></code> is odd at this point so <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">-</span> <span class="pre">1</span></code> is even and is assumed to be <code class="docutils literal notranslate"><span class="pre">st</span></code> where <code class="docutils literal notranslate"><span class="pre">s</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are assumed as above.</p>
+<p>Now, we start from 0 as the power of 2 and go on till <span class="math notranslate nohighlight">\(2^h = t\)</span> and for each we check <span class="math notranslate nohighlight">\(a_i^{s 2^h}\)</span> modulo p. We know this sequence always ends at 1 (we calculated this in step <code class="docutils literal notranslate"><span class="pre">4</span></code>). This sequence will have all terms from 1 to p - 1 (since 0 is not possible by this step). We read the sequence from right to left. If some element of this sequence is not 1 we reject if that element is not -1.</p>
+<div class="section" id="proof">
+<h2>Proof<a class="headerlink" href="#proof" title="Permalink to this headline">¶</a></h2>
+<p>If p is prime then algorithm will always accept. In step 4, it will always give 1 due to Fermat’s little theorem and here it will never reject. Next it may reject at step 7.</p>
+<p>We prove that the first number (reading from right to left) that is not 1 will be -1 for a prime input.</p>
+<p>Notice that last number is 1. And the element before it is the square root of this number. And every previous element is the square root of the next element.</p>
+<p>So let’s say we encounter the element <code class="docutils literal notranslate"><span class="pre">b</span></code> whose modulo is not 1.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(b \not \equiv 1 (\text{mod} p)\)</span> and <span class="math notranslate nohighlight">\(b^2 \equiv 1 (\text{mod} p)\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\implies b^2 - 1 \equiv 0 (\text{mod} p)\]</div>
+<div class="math notranslate nohighlight">
+\[\implies (b - 1)(b + 1) \equiv 0 (\text{mod} p)\]</div>
+<p>By Euclid’s lemma,</p>
+<blockquote>
+<div><p>If a prime p divides the product ab of two integers a and b, then p must divide at least one of those integers a and b.</p>
+</div></blockquote>
+<p>which means that if p is prime it divides one of the factors <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">-</span> <span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">+</span> <span class="pre">1</span></code>, implying that b is congruent to either 1  or -1 modulo n.
+From our assumption, therefore <span class="math notranslate nohighlight">\(b \equiv -1 (mod n)\)</span>.</p>
+<p>This explains step <code class="docutils literal notranslate"><span class="pre">7</span></code> in our algorithm. If all tests are passed then we accept it.</p>
+<p>Therefore, Probability(Algorithm accepts prime numbers) = 1.</p>
+</div>
+<div class="section" id="for-composite-numbers">
+<h2>For Composite Numbers<a class="headerlink" href="#for-composite-numbers" title="Permalink to this headline">¶</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">p</span></code> is an odd composite number and <code class="docutils literal notranslate"><span class="pre">a</span></code> is selected randomly in <span class="math notranslate nohighlight">\(Z_p^+\)</span>, then we prove that Probability(a is a witness) &gt;= 1/2 by demonstrating that at least as many witnesses as non witnesses exist in <span class="math notranslate nohighlight">\(Z_p^+\)</span>.</p>
+<p>Here, witness means that <code class="docutils literal notranslate"><span class="pre">a</span></code> confirms that <code class="docutils literal notranslate"><span class="pre">p</span></code> is composite (from the Miller-Rabin Test). And non-witness means that <code class="docutils literal notranslate"><span class="pre">a</span></code> gives prime for <code class="docutils literal notranslate"><span class="pre">p</span></code> when <code class="docutils literal notranslate"><span class="pre">p</span></code> is composite.</p>
+<div class="section" id="id1">
+<h3>Proof<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>In every non witness, the sequence computed in stage 6 is either all 1s or contains -1 at some location followed by 1s. For example, 1 itself is a non witness of the first kind and -1 is a non witness of the second kind since s is odd and <span class="math notranslate nohighlight">\((-1)^{s 2^0} \equiv -1\)</span> and <span class="math notranslate nohighlight">\((-1)^{s 2^1} \equiv 1\)</span>.</p>
+<p>Among all these non-witnesses, we consider h to be the non witness where -1 appears at the rightmost position in the sequence and let that position be j (positions numbered from 0). Hence, <span class="math notranslate nohighlight">\(h^{s 2^j} \equiv -1\)</span> (mod p).</p>
+<p>Because p is composite, either p is exact prime power or it has atleast two prime factors and we can write it as product of <code class="docutils literal notranslate"><span class="pre">q</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>, which are relatively prime. We consider the latter case first. Therefore by the Chinese remainder theorem, some number t exists in <span class="math notranslate nohighlight">\(Z_p\)</span> such that</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> \<span class="n">equiv</span> <span class="n">h</span> <span class="p">(</span><span class="n">mod</span> <span class="n">q</span><span class="p">)</span> <span class="ow">and</span>
+<span class="n">t</span> \<span class="n">equiv</span> <span class="mi">1</span> <span class="p">(</span><span class="n">mod</span> <span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Therefore,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">^</span><span class="p">{</span><span class="n">s</span> <span class="mi">2</span><span class="o">^</span><span class="n">j</span><span class="p">}</span> \<span class="n">equiv</span> <span class="o">-</span><span class="mi">1</span> <span class="p">(</span><span class="n">mod</span> <span class="n">q</span><span class="p">)</span>
+<span class="n">t</span><span class="o">^</span><span class="p">{</span><span class="n">s</span> <span class="mi">2</span><span class="o">^</span><span class="n">j</span><span class="p">}</span> \<span class="n">equiv</span>  <span class="mi">1</span> <span class="p">(</span><span class="n">mod</span> <span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hence, t is a witness because <span class="math notranslate nohighlight">\(t^{s 2^j} \not \equiv \pm 1\)</span> (mod p) but <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}} \equiv 1\)</span> (mod p).</p>
+<p>Since, <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}} \equiv 1\)</span> for both mod q and mod r thus it will also hold for mod p. But at j^th location it is -1 for mod q and 1 for mod r. Therefore, it cannot be <span class="math notranslate nohighlight">\(\pm 1\)</span> for mod p. Thus t will becomes a witness in this case.</p>
+<p>Now, that we have one witness we can show that <span class="math notranslate nohighlight">\(dt mod p\)</span> is a unique witness for each non witness d by making two more observations:</p>
+<p>First, <span class="math notranslate nohighlight">\(d^{s 2^j} \equiv \pm 1\)</span> (mod p) and <span class="math notranslate nohighlight">\(d^{s 2^{j + 1}} \equiv 1\)</span> (mod p) owing to the way j was chosen. Therefore <code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">mod</span> <span class="pre">p</span></code> is a witness because <span class="math notranslate nohighlight">\((dt)^{s 2^j} \not \equiv \pm 1\)</span> (mod p) and <span class="math notranslate nohighlight">\((dt)^{s 2^{j + 1}} \equiv 1\)</span> (mod p).</p>
+<p>Second, d_1 and d_2 are distinct non witnesses, d_1 t mod p not equal to d_2 t mod p. The reason is that <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}}\)</span> mod p = 1. Hence, <span class="math notranslate nohighlight">\(t.t^{s 2^{j + 1} - 1}\)</span> mod p = 1. Therefore, if t d_1 mod p = t d_2 mod p, then</p>
+<p><span class="math notranslate nohighlight">\(d_1 = t.t^{s 2^{j + 1} - 1} d_1 mod p = t.t^{s 2^{j + 1} - 1} d_2 mod p = d_2\)</span>.</p>
+<p>Thus, the number of witnesses must be as large as the number of non witnesses and we have completed the analysis for the case where p is not a prime factor.</p>
+<p>For the prime power case we have p = q^e where q is prime and e &gt; 1. Let t = 1 + q^{e - 1}. Expanding t^p using the binomial theorem we obtain</p>
+<p><span class="math notranslate nohighlight">\(t^p = (1 + q^{e - 1})^p = 1 + p q^{e - 1}\)</span> + multiples of higher powers of q^{e - 1} which is congruent to 1 mod p. Hence, t is a stage for witness because if t^{p − 1} \equiv 1 (mod p), then <span class="math notranslate nohighlight">\(t^p \equiv t \not \equiv 1\)</span> (mod p). As in the previous case, we use this one witness to get many others. If d is a non witness we have d^{p - 1} \equiv 1 (mod p) but then dt mod p is a witness. Moreover if d_1 and d_2 are distinct non witnesses, then d_1 t mod p not equal to d_2 t mod p. Otherwise,</p>
+<p><span class="math notranslate nohighlight">\(d_1 = d_1 t t^{p - 1} mod p = d_2 t t^{p - 1} mod p = d_2\)</span>.</p>
+<p>Thus the number of witnesses must be as large as the number of non-witnesses and the proof is complete.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="fermat-test.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Fermat’s Test</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="aks.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">AKS Primality Test</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Shikhar Saxena (2021121010)<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

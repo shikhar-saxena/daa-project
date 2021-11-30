@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prelimnaries &#8212; Algorithm Analysis and Design Project</title>
+    <title>Introduction &#8212; Algorithm Analysis and Design Project</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -43,6 +43,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -50,10 +52,10 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Trial Division Test" href="trial-division.html" />
-    <link rel="prev" title="Introduction" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -83,21 +85,48 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+ <li class="toctree-l1 current">
+  <a class="reference internal" href="#">
    Introduction
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Prelimnaries
-  </a>
- </li>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="trial-division.html">
    Trial Division Test
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="probabilistic.html">
+   Probabilistic Primality Testing
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="fermat-test.html">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="miller-rabin.html">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="aks.html">
+   AKS Primality Test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rsa.html">
+   GCD
   </a>
  </li>
 </ul>
@@ -152,22 +181,6 @@
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Fprelim.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -182,6 +195,43 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#divisibility-primes-and-composites">
+   Divisibility, Primes and Composites
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fundamental-theorem-of-arithmetic">
+     Fundamental Theorem of Arithmetic
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#congruence-and-modular-arithmetic">
+   Congruence and Modular Arithmetic
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#euler-phi-totient-function">
+     Euler Phi (Totient) function
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#complexity-theory">
+   Complexity Theory
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -190,41 +240,99 @@
         
               <div>
                 
-  <!-- ---
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
---- -->
-<div class="tex2jax_ignore mathjax_ignore section" id="prelimnaries">
-<h1>Prelimnaries<a class="headerlink" href="#prelimnaries" title="Permalink to this headline">¶</a></h1>
-<p>Some <strong>intro Markdown</strong>!</p>
-<p>Simply put, A prime is a positive integer p having exactly two positive
-divisors, namely 1 and p. An integer n is composite if n &gt; 1 and n is not
-prime. (The number 1 is considered neither prime nor composite.) Thus,
-an integer n is composite if and only if it admits a nontrivial factorization
-n = ab, where a, b are integers, each strictly between 1 and n. Though the
-definition of primality is exquisitely simple, the resulting sequence 2, 3, 5, 7,…
-of primes will be the highly nontrivial collective object of our attention. The
-wonderful properties, known results, and open conjectures pertaining to the
-primes are manifold. We shall cover some of what we believe to be theoretically
-interesting, aesthetic, and practical aspects of the primes. Along the way,
-we also address the essential problem of factorization of composites, a field
-inextricably entwined with the study of the primes themselves.
-In the remainder of this chapter we shall introduce our cast of characters,
-the primes themselves, and some of the lore that surrounds them.</p>
-<!-- 
-```{code-cell} ipython3
-:tags: [mytag]
-
-print("A python cell")
-``` 
--->
+  <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This project does a thorough exploration of Primality-Testing Algorithms and also covers the design and analysis of some Greedy and Dynamic Programming algorithms.</p>
+<p>We will assume that the reader is familiar with the basic arithmetic properties of class of integers <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span>.
+Some prelimnaries are covered henceforth:</p>
+<div class="section" id="divisibility-primes-and-composites">
+<h2>Divisibility, Primes and Composites<a class="headerlink" href="#divisibility-primes-and-composites" title="Permalink to this headline">¶</a></h2>
+<div class="proof definition admonition" id="definition-0">
+<p class="admonition-title"><span class="caption-number">Definition 1 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(a, b\)</span> are integers we say that <span class="math notranslate nohighlight">\(a\)</span> <em><strong>divides</strong></em> <span class="math notranslate nohighlight">\(b\)</span>, or that <span class="math notranslate nohighlight">\(a\)</span> is a <em><strong>factor</strong></em> or <em><strong>divisor</strong></em> of <span class="math notranslate nohighlight">\(b\)</span>, if there exists an integer <span class="math notranslate nohighlight">\(q\)</span> such that <span class="math notranslate nohighlight">\(b = aq\)</span>. We denote this by <span class="math notranslate nohighlight">\(a|b\)</span>. Then <span class="math notranslate nohighlight">\(b\)</span> is a <em><strong>multiple</strong></em> of <span class="math notranslate nohighlight">\(a\)</span>. If <span class="math notranslate nohighlight">\(b &gt; 1\)</span> is an integer whose only factors are <span class="math notranslate nohighlight">\(\pm 1\)</span>, <span class="math notranslate nohighlight">\(\pm b\)</span> then
+<span class="math notranslate nohighlight">\(b\)</span> is <em><strong>prime</strong></em>; otherwise, <span class="math notranslate nohighlight">\(b &gt; 1\)</span> is <em><strong>composite</strong></em>.</p>
+</div>
+</div><p>Simply put, a <strong>Prime Number</strong> is a positive integer <span class="math notranslate nohighlight">\(p\)</span> having exactly two positive divisors, namely <span class="math notranslate nohighlight">\(1\)</span> and <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p>For any two numbers <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b &gt; 0\)</span>, we can always attempt to divide <span class="math notranslate nohighlight">\(a\)</span> by <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<p>Mathematically, for any two numbers <span class="math notranslate nohighlight">\(a, b\)</span> where <span class="math notranslate nohighlight">\(b &gt; 0\)</span> we have unique integers <span class="math notranslate nohighlight">\(q,r\)</span> such that <span class="math notranslate nohighlight">\(a = qb + r\)</span> holds where <span class="math notranslate nohighlight">\(r = 0\)</span> or <span class="math notranslate nohighlight">\(0 &lt; r &lt; b\)</span>. Thus, here, <span class="math notranslate nohighlight">\(q\)</span> and <span class="math notranslate nohighlight">\(r\)</span> are the quotient and remainder of the division respectively. Here, if remainder is <span class="math notranslate nohighlight">\(0\)</span> then it implies that <span class="math notranslate nohighlight">\(b\)</span> is a factor of <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<p>The next idea that is necessary is the concept of greatest common divisor.</p>
+<div class="proof definition admonition" id="definition-1">
+<p class="admonition-title"><span class="caption-number">Definition 2 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>Given nonzero integers <span class="math notranslate nohighlight">\(a, b\)</span>, their greatest common divisor or
+GCD <span class="math notranslate nohighlight">\(d &gt; 0\)</span> is a positive integer that is a common divisor, that is, <span class="math notranslate nohighlight">\(d|a\)</span> and <span class="math notranslate nohighlight">\(d|b\)</span>, and if <span class="math notranslate nohighlight">\(d_1\)</span> is any other common divisor then <span class="math notranslate nohighlight">\(d_1|d\)</span>. We denote the greatest common divisor
+of <span class="math notranslate nohighlight">\(a, b\)</span> by either gcd<span class="math notranslate nohighlight">\((a, b)\)</span> or <span class="math notranslate nohighlight">\((a, b)\)</span>.</p>
+</div>
+</div><p>The GCD is unique for any two nonzero integers (since only one common factor can be the greatest factor). Also the GCD is characterized as the least positive linear combination possible for <span class="math notranslate nohighlight">\(a, b\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\((a, b) = 1\)</span> then we say that <span class="math notranslate nohighlight">\(a,b\)</span> are <strong>relatively prime</strong> or intuitively, <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> do not share any common factors with each other.</p>
+<div class="proof lemma admonition" id="lemma-2">
+<p class="admonition-title"><span class="caption-number">Lemma 1 </span> (Euclid’s lemma)</p>
+<div class="lemma-content section" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(a | bc\)</span>. Then <span class="math notranslate nohighlight">\(a | b\)</span> or <span class="math notranslate nohighlight">\(a | c\)</span>.</p>
+</div>
+</div><div class="section" id="fundamental-theorem-of-arithmetic">
+<h3>Fundamental Theorem of Arithmetic<a class="headerlink" href="#fundamental-theorem-of-arithmetic" title="Permalink to this headline">¶</a></h3>
+<div class="proof theorem admonition" id="theorem-3">
+<p class="admonition-title"><span class="caption-number">Theorem 1 </span></p>
+<div class="theorem-content section" id="proof-content">
+<p>Given any integer <span class="math notranslate nohighlight">\(n &gt; 1\)</span> there is a factorization</p>
+<div class="math notranslate nohighlight">
+\[n = p_1 p_2 \cdots p_k\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_1, \ldots , p_k\)</span> are primes. Further, this factorization is unique up to the ordering of the factors.</p>
+</div>
+</div><p>We use the notation <span class="math notranslate nohighlight">\(n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}\)</span> to denote the factorization of <span class="math notranslate nohighlight">\(n\)</span> where <span class="math notranslate nohighlight">\(p_1, p_2, \ldots, p_k\)</span> are the prime factors of <span class="math notranslate nohighlight">\(n\)</span> and the exponents are greater than 0.</p>
+</div>
+</div>
+<div class="section" id="congruence-and-modular-arithmetic">
+<h2>Congruence and Modular Arithmetic<a class="headerlink" href="#congruence-and-modular-arithmetic" title="Permalink to this headline">¶</a></h2>
+<div class="proof definition admonition" id="definition-4">
+<p class="admonition-title"><span class="caption-number">Definition 3 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(m\)</span> is a positive integer. If <span class="math notranslate nohighlight">\(a, b\)</span> are integers such that <span class="math notranslate nohighlight">\(m|(a−b)\)</span> then <span class="math notranslate nohighlight">\(a\)</span> is said to be <strong>congruent</strong> to <span class="math notranslate nohighlight">\(b\)</span> <strong>modulo</strong> <span class="math notranslate nohighlight">\(m\)</span> and denoted by <span class="math notranslate nohighlight">\(a \equiv b \text{ mod } m\)</span>.</p>
+</div>
+</div><div class="section" id="euler-phi-totient-function">
+<h3>Euler Phi (Totient) function<a class="headerlink" href="#euler-phi-totient-function" title="Permalink to this headline">¶</a></h3>
+<div class="proof definition admonition" id="definition-5">
+<p class="admonition-title"><span class="caption-number">Definition 4 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>For any <span class="math notranslate nohighlight">\(n &gt; 0\)</span>, we define <span class="math notranslate nohighlight">\(\phi(n)\)</span> as the number of integers less than or equal to <span class="math notranslate nohighlight">\(n\)</span> that are relatively prime to <span class="math notranslate nohighlight">\(n\)</span>.</p>
+</div>
+</div><div class="proof lemma admonition" id="lemma-6">
+<p class="admonition-title"><span class="caption-number">Lemma 2 </span></p>
+<div class="lemma-content section" id="proof-content">
+<p>For any prime <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(m &gt; 0\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\phi(p^m) = p^m − p^{m−1} \]</div>
+</div>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Proof is fairly simple.
+The integers less than <span class="math notranslate nohighlight">\(p^m\)</span> that are not relatively prime to <span class="math notranslate nohighlight">\(p^m\)</span> are precisely the multiples of <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p>Total number of multiples of <span class="math notranslate nohighlight">\(p\)</span> till <span class="math notranslate nohighlight">\(p^m\)</span></p>
+<div class="math notranslate nohighlight">
+\[p^m = p + (n - 1) p \implies n = p^{m - 1}\]</div>
+<p>Hence,  <span class="math notranslate nohighlight">\(\phi(p^m) = p^m − p^{m−1}\)</span>.</p>
+</div>
+<p>We also note that the totient function is a multiplicative function i.e., <span class="math notranslate nohighlight">\(\phi(mn) = \phi(m)\phi(n)\)</span> (proof has been omitted).</p>
+</div>
+</div>
+<div class="section" id="complexity-theory">
+<h2>Complexity Theory<a class="headerlink" href="#complexity-theory" title="Permalink to this headline">¶</a></h2>
+<div class="proof definition admonition" id="definition-7">
+<p class="admonition-title"><span class="caption-number">Definition 5 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>We say that <span class="math notranslate nohighlight">\(f(n) = O(n^k)\)</span> if, for some <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(n_0\)</span>, for all <span class="math notranslate nohighlight">\(n \ge n0,\)</span></p>
+<div class="math notranslate nohighlight">
+\[f(n) \le c \cdot n^k\]</div>
+<p>We say that, <span class="math notranslate nohighlight">\(f(n) = \tilde{O}(n^k)\)</span> if, for some <span class="math notranslate nohighlight">\(c \ge 0,\)</span></p>
+<div class="math notranslate nohighlight">
+\[f(n) = O(n^k\; (\log n)^c)\]</div>
+<p>The <span class="math notranslate nohighlight">\(\tilde{O}\)</span> notation is useful to avoid terms like <span class="math notranslate nohighlight">\(\log n\)</span> and <span class="math notranslate nohighlight">\(\log \log n\)</span>.</p>
+<p>For example, it is easier to write <span class="math notranslate nohighlight">\(\tilde{O}(n)\)</span> than the (more precise) <span class="math notranslate nohighlight">\(O(n log n log log n)\)</span>.</p>
+</div>
+</div></div>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -256,15 +364,6 @@ print("A python cell")
 
 <div class='prev-next-bottom'>
     
-    <div id="prev">
-        <a class="left-prev" href="intro.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Introduction</p>
-            </div>
-        </a>
-    </div>
      <div id="next">
         <a class="right-next" href="trial-division.html" title="next page">
             <div class="prevnext-info">

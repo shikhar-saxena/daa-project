@@ -52,10 +52,11 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="sieve.html" />
-    <link rel="prev" title="Prelimnaries" href="prelim.html" />
+    <link rel="next" title="Probabilistic Primality Testing" href="probabilistic.html" />
+    <link rel="prev" title="Introduction" href="prelim.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -86,20 +87,47 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="prelim.html">
    Introduction
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="prelim.html">
-   Prelimnaries
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Trial Division Test
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="probabilistic.html">
+   Probabilistic Primality Testing
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="fermat-test.html">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="miller-rabin.html">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="aks.html">
+   AKS Primality Test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rsa.html">
+   GCD
   </a>
  </li>
 </ul>
@@ -141,10 +169,7 @@
 
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
-        <a class="dropdown-buttons"
-            href="_sources/trial-division.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+        
         <!-- Download raw file -->
         <a class="dropdown-buttons" href="_sources/trial-division.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
@@ -157,22 +182,6 @@
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Ftrial-division.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -181,23 +190,6 @@
             class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/shikhar-saxena/daa-project/main?urlpath=tree/docs/trial-division.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
 
         </div>
 
@@ -210,8 +202,13 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#divisibility-test">
-   Divisibility Test
+  <a class="reference internal nav-link" href="#method">
+   Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theoretical-considerations">
+   Theoretical Considerations
   </a>
  </li>
 </ul>
@@ -227,25 +224,73 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="trial-division-test">
 <h1>Trial Division Test<a class="headerlink" href="#trial-division-test" title="Permalink to this headline">¶</a></h1>
+<p><strong>Trial Division</strong> is the most laborious yet easiest to understand of the integer factorization algorithms.</p>
+<div class="section" id="method">
+<h2>Method<a class="headerlink" href="#method" title="Permalink to this headline">¶</a></h2>
+<p>Given an integer <span class="math notranslate nohighlight">\(n\)</span>, the trial division consists of sequentially testing whether <span class="math notranslate nohighlight">\(n\)</span> is divisible by any smaller number. So for a small number, we can use the same approach to factor the number as well.</p>
+<p>The choice of trial divisors is not fixed. A loose upper bound is to check till <span class="math notranslate nohighlight">\(n - 1\)</span> or we can bring it down to <span class="math notranslate nohighlight">\(n/2\)</span> since if <span class="math notranslate nohighlight">\(n\)</span> is composite then <span class="math notranslate nohighlight">\(n = ab\)</span> where if <span class="math notranslate nohighlight">\(a &gt; n/2\)</span> then we have already checked whether <span class="math notranslate nohighlight">\(n\)</span> is divisible by <span class="math notranslate nohighlight">\(b\)</span>. To speed things up even further, we may exploit the fact that after 2, we can skip the other even numbers. So, 2 and the odd numbers may be used as trial divisors.</p>
+<p>As a slightly tighter upper bound we only need to check upto <span class="math notranslate nohighlight">\(\sqrt{n}\)</span> which can be proved by the following theorem.</p>
 <div class="proof theorem admonition" id="theorem-0">
-<p class="admonition-title"><span class="caption-number">Theorem 1 </span></p>
+<p class="admonition-title"><span class="caption-number">Theorem 2 </span></p>
 <div class="theorem-content section" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(n &gt; 1\)</span> be an integer. Then n has no prime divisor less than or equal to <span class="math notranslate nohighlight">\(\sqrt{n}\)</span> if and only if <span class="math notranslate nohighlight">\(n\)</span> is prime.</p>
+<p>If <span class="math notranslate nohighlight">\(n &gt; 1\)</span> is composite, then <span class="math notranslate nohighlight">\(n\)</span> has a prime divisor <span class="math notranslate nohighlight">\(p\)</span> such that <span class="math notranslate nohighlight">\(p \le \sqrt{n}\)</span></p>
 </div>
 </div><div class="proof admonition" id="proof">
 <p>Proof. If <span class="math notranslate nohighlight">\(n\)</span> is composite, then <span class="math notranslate nohighlight">\(n = ab\)</span> where <span class="math notranslate nohighlight">\(a &gt; 1\)</span> and <span class="math notranslate nohighlight">\(b &gt; 1\)</span>. For convenience suppose <span class="math notranslate nohighlight">\(a\le b\)</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(p\)</span> be a prime divisor of a. Thus, <span class="math notranslate nohighlight">\(p \le a \le b\)</span>. So</p>
-<p><span class="math notranslate nohighlight">\(p^2 \le a^2 \le ab = n\)</span></p>
+<div class="math notranslate nohighlight">
+\[p^2 \le a^2 \le ab = n\]</div>
 <p>Since, <span class="math notranslate nohighlight">\(p | a\)</span> and <span class="math notranslate nohighlight">\(a | n\)</span> we have <span class="math notranslate nohighlight">\(p | n\)</span>.</p>
 </div>
-<div class="section" id="divisibility-test">
-<h2>Divisibility Test<a class="headerlink" href="#divisibility-test" title="Permalink to this headline">¶</a></h2>
-<p>A divisibility test is a procedure applied to a number <span class="math notranslate nohighlight">\(n\)</span> so as to determine whether <span class="math notranslate nohighlight">\(n\)</span> is divisible by a particular small number or not.</p>
-<p>From a computational point of view, checking if <span class="math notranslate nohighlight">\(n\)</span> is divisible by a number <span class="math notranslate nohighlight">\(p\)</span> can be achieved by dividing <span class="math notranslate nohighlight">\(n\)</span> by <span class="math notranslate nohighlight">\(p\)</span> and getting the quotient and remainder. For remainder being 0, the number is said to be divisible and <span class="math notranslate nohighlight">\(p\)</span> is said to be a <em>factor</em> of <span class="math notranslate nohighlight">\(n\)</span>.</p>
-<p><strong>Trial Division</strong> is the most laborious but easiest to understand of the integer factorization algorithms.</p>
-<p>We sequentially check whether <em>n</em> is divisible or not by the members of the set of trial divisors for <em>n</em>.</p>
- <!--TODO: FIXME:  -->
-<p>It is not necessary that the trial divisors be all primes. To speed things up, however we may exploit the fact that after 2, we can skip the other even numbers. So, 2 and the odd numbers may be used as trial divisors.</p>
+<p>Therefore, the algorithm can be summarized as follows:</p>
+<div class="proof algorithm admonition" id="algorithm-1">
+<p class="admonition-title"><span class="caption-number">Algorithm 1 </span></p>
+<div class="algorithm-content section" id="proof-content">
+<p><strong>Input:</strong> Integer <span class="math notranslate nohighlight">\(n &gt; 1\)</span></p>
+<ol class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(2 | n\)</span> return COMPOSITE</p></li>
+<li><p>Take <span class="math notranslate nohighlight">\(k = 3\)</span></p></li>
+<li><p>while <span class="math notranslate nohighlight">\(k^2 \le n\)</span> do</p></li>
+<li><p>if <span class="math notranslate nohighlight">\(k | n\)</span> return COMPOSITE</p></li>
+<li><p>else <span class="math notranslate nohighlight">\(k = k + 2\)</span> and repeat the loop</p></li>
+<li><p>return PRIME</p></li>
+</ol>
+</div>
+</div><p>We can also use sieving techniques, that way our trial divisors will only be the prime numbers upto <span class="math notranslate nohighlight">\(\sqrt{n}\)</span>.</p>
+</div>
+<div class="section" id="theoretical-considerations">
+<h2>Theoretical Considerations<a class="headerlink" href="#theoretical-considerations" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we wish to use trial division to test <span class="math notranslate nohighlight">\(n\)</span> for primality.</p>
+<p>The worst case running time is when <span class="math notranslate nohighlight">\(n\)</span> is prime and we must try all potential divisors i.e., the numbers up to <span class="math notranslate nohighlight">\(\sqrt{n}\)</span>. If we are using just primes as trial divisors, the number of divisions is about <span class="math notranslate nohighlight">\(2 \frac{\sqrt{n}}{ln n}\)</span>.</p>
+<!--  -->
+<p>If we use 2 and the odd numbers as trial divisors, the number of
+divisions is about 1
+2
+√n.</p>
+<p>So this is the running time for trial division as a primality test. What is its
+complexity as an algorithm to obtain the complete factorization of n when n is
+composite? The worst case is still about √n, for just consider the numbers that
+are the double of a prime. We can also ask for the average case complexity for
+factoring composites. Again, it is almost √n, since the average is dominated
+by those composites that have a very large prime factor. But such numbers are
+rare. It may be interesting to throw out the 50% worst numbers and compute
+the average running time for trial division to completely factor the remaining
+numbers. This turns out to be nc, where c = 1/(2√e) ≈ 0.30327; see Exercise
+3.5.
+As we shall see later in this chapter and in the next chapter, the problem
+of recognizing primes is much easier than the general case of factorization. In
+particular, we have much better ways than trial division to recognize primes.
+Thus, if one uses trial division as a factorization method, one should augment
+it with a faster primality test whenever a new unfactored portion of n is
+discovered, so that the last bit of trial division may be skipped when the
+last part turns out to be prime. So augmenting trial division, the time to
+completely factor a composite n essentially is the square root of the second
+largest prime factor of n.
+Again the average is dominated by a sparse set of numbers, in this case
+those numbers that are the product of two primes of the same order of
+magnitude; the average being about √n. But now throwing out the 50% worst
+numbers gives a smaller estimate for the average of the remaining numbers.
+It is nc, where c ≈ 0.23044.</p>
 </div>
 </div>
 
@@ -283,15 +328,15 @@
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Prelimnaries</p>
+                <p class="prevnext-title">Introduction</p>
             </div>
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="sieve.html" title="next page">
+        <a class="right-next" href="probabilistic.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title">Probabilistic Primality Testing</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

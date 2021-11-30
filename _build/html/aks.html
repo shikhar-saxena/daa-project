@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; Algorithm Analysis and Design Project</title>
+    <title>AKS Primality Test &#8212; Algorithm Analysis and Design Project</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -43,6 +43,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -50,10 +52,11 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="rsa.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="ecpp.html" />
+    <link rel="next" title="GCD" href="rsa.html" />
+    <link rel="prev" title="Miller-Rabin Primality Test" href="miller-rabin.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -84,20 +87,47 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="prelim.html">
    Introduction
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="prelim.html">
-   Prelimnaries
-  </a>
- </li>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="trial-division.html">
    Trial Division Test
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="probabilistic.html">
+   Probabilistic Primality Testing
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="fermat-test.html">
+     Fermat’s Test
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="miller-rabin.html">
+     Miller-Rabin Primality Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   AKS Primality Test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rsa.html">
+   GCD
   </a>
  </li>
 </ul>
@@ -152,22 +182,6 @@
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/shikhar-saxena/daa-project"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/shikhar-saxena/daa-project/issues/new?title=Issue%20on%20page%20%2Faks.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -186,7 +200,12 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intuition">
+   Intuition
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -198,7 +217,120 @@
         
               <div>
                 
-  
+  <div class="tex2jax_ignore mathjax_ignore section" id="aks-primality-test">
+<h1>AKS Primality Test<a class="headerlink" href="#aks-primality-test" title="Permalink to this headline">¶</a></h1>
+<p>The AKS primality test is a deterministic primality test.
+It was the foremost test that proved that the language <em>PRIMES</em> is in <em>P</em> class finally settling the issue about where <em>PRIMES</em> belongs.</p>
+<div class="section" id="intuition">
+<h2>Intuition<a class="headerlink" href="#intuition" title="Permalink to this headline">¶</a></h2>
+<p>AKS test is an extension of Fermat’s Little Theorem to polynomials.</p>
+<div class="proof lemma admonition" id="lemma-0">
+<p class="admonition-title"><span class="caption-number">Lemma 3 </span></p>
+<div class="lemma-content section" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(a,n \in \mathbb{Z}\)</span> with <span class="math notranslate nohighlight">\((a, n) = 1\)</span>.
+Then <span class="math notranslate nohighlight">\(n\)</span> is prime iff</p>
+<div class="math notranslate nohighlight">
+\[(X + a)^n \equiv X^n + a \quad (\text{mod} n)\]</div>
+</div>
+</div><p>Here, <span class="math notranslate nohighlight">\(X\)</span> is a symbol that is part of the polynomial.</p>
+<div class="proof admonition" id="proof">
+<p>Proof. Using Binomial theorem,</p>
+<div class="math notranslate nohighlight">
+\[(X + a)^n = \sum_{k = 0}^{n} \binom{n}{k} X^{n - k} a^k\]</div>
+<p>For <span class="math notranslate nohighlight">\(0 &lt; k &lt; n\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\binom{n}{k} = \frac{n!}{(n - k)! k!} = \frac{n \cdot (n - 1) \cdot (n - 2) \cdots (n - k + 1)}{k!}\]</div>
+<p>Suppose <span class="math notranslate nohighlight">\(n\)</span> is prime. Then on modulus <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(n | n\)</span> in the numerator but nothing in the denominator since <span class="math notranslate nohighlight">\(k &lt; n\)</span> and <span class="math notranslate nohighlight">\((k,n) = 1\)</span> due to <span class="math notranslate nohighlight">\(n\)</span> being prime.</p>
+<p>Now, we are left with the <span class="math notranslate nohighlight">\(0^{th}\)</span> and <span class="math notranslate nohighlight">\(n^{th}\)</span> terms both having coefficients <span class="math notranslate nohighlight">\(= 1\)</span>.</p>
+<p>For, the <span class="math notranslate nohighlight">\(0^{th}\)</span> term, <span class="math notranslate nohighlight">\(X^n \text{ mod } n\)</span> remains.
+As for the <span class="math notranslate nohighlight">\(n^{th}\)</span> term, <span class="math notranslate nohighlight">\(a^{n} = a \text{ mod } n\)</span> by Fermat’s Little Theorem.</p>
+<p>To prove the other side of the biconditional, we will prove the contrapositive.</p>
+<p>Suppose, <span class="math notranslate nohighlight">\(n\)</span> is composite. Therefore, we assume a prime factor <span class="math notranslate nohighlight">\(p\)</span> of <span class="math notranslate nohighlight">\(n\)</span>.
+Therefore, by fundamental theorem of arithmetic, we know for some <span class="math notranslate nohighlight">\(e &gt; 0,\quad p^e | n\)</span> but <span class="math notranslate nohighlight">\(p^{e + 1} \nmid n\)</span>.</p>
+<p>For the <span class="math notranslate nohighlight">\(p^{th}\)</span> term, coefficient <span class="math notranslate nohighlight">\(= \binom{n}{p} = \frac{n \cdot (n - 1) \cdot (n - 2) \cdots (n - p + 1)}{p!}\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(p^e\)</span> divides only <span class="math notranslate nohighlight">\(n\)</span> in the numerator and nothing else (since the numerator is consecutive numbers of count <span class="math notranslate nohighlight">\(p\)</span> and only <span class="math notranslate nohighlight">\(n\)</span> is divisible by them). But there is an additional <span class="math notranslate nohighlight">\(p\)</span> in the denominator due to <span class="math notranslate nohighlight">\(p!\)</span>.</p>
+<p>Which implies that, <span class="math notranslate nohighlight">\(p^{e - 1} | \binom{n}{p}\)</span> but <span class="math notranslate nohighlight">\(p^{e} \nmid \binom{n}{p}\)</span>. Which means that <span class="math notranslate nohighlight">\(n \nmid \binom{n}{p}\)</span> and therefore this term does not vanish.</p>
+<p>Thus, we do not reach the <span class="math notranslate nohighlight">\(X^n + a\)</span> form.</p>
+</div>
+<p>This lemma in itself gives a condition to do primality testing. But computing the coefficients of <span class="math notranslate nohighlight">\((X + a)^n\)</span> is exponential in the size of <span class="math notranslate nohighlight">\(n\)</span> which makes the test extremely slow for large inputs.</p>
+<p>This is solved in the AKS test by evaluating the polynomials on both sides modulo another polynomial, <span class="math notranslate nohighlight">\(X^r - 1\)</span> and checking for several different <span class="math notranslate nohighlight">\(a\)</span>’s.</p>
+<p>So we test the congruence</p>
+<div class="math notranslate nohighlight">
+\[(X + a)^n \equiv X^n + a \quad (\text{mod } X^r - 1, n)\]</div>
+<p>This will lower the degree of the polynomial and thus reduce the number of coefficients needed to be calculated to confirm the test.</p>
+<div class="proof algorithm admonition" id="algorithm-1">
+<p class="admonition-title"><span class="caption-number">Algorithm 4 </span> (AKS Primality Test)</p>
+<div class="algorithm-content section" id="proof-content">
+<p>Input: <span class="math notranslate nohighlight">\(n \ge 2\)</span></p>
+<ol class="simple">
+<li><p>If n = <span class="math notranslate nohighlight">\(a^b\)</span> for <span class="math notranslate nohighlight">\(a \in \mathbb{N}\)</span> and <span class="math notranslate nohighlight">\(b &gt; 1\)</span>, return <strong>COMPOSITE</strong></p></li>
+<li><p>Find the smallest <span class="math notranslate nohighlight">\(r\)</span> such that <span class="math notranslate nohighlight">\(ord_r(n) \not \le log^2 n\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(1 &lt; (a, n) &lt; n\)</span> for some <span class="math notranslate nohighlight">\(a \le r\)</span>, return COMPOSITE</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(n \le r\)</span>, return PRIME</p></li>
+<li><p>For a = 1 to <span class="math notranslate nohighlight">\(\lfloor \sqrt{\phi(r)} log n \rfloor\)</span>:</p></li>
+<li><p>If <span class="math notranslate nohighlight">\((X + a)^n \not \equiv X^n + a \; (\text{mod } X^r − 1, n)\)</span>, return COMPOSITE.</p></li>
+<li><p>Return PRIME.</p></li>
+</ol>
+</div>
+</div><!-- 
+While the lemma constitutes a primality test in itself, verifying it takes
+exponential time: the brute force approach would require the expansion
+of the (x + a)n polynomial and a reduction modn of the resulting n + 1
+coefficients.
+The congruence is an equality in the polynomial ring Zn[x]. Evaluating
+in a quotient ring of Zn[x] creates an upper bound for the degree of the
+polynomials involved. The AKS evaluates the equality in Zn[x]/ (xr − 1) ,
+making the computational complexity dependent on the size of r. For clarity,
+this is expressed as the congruence
+(x + a)n ≡ xn + a
+(mod xr − 1, n)
+Note that all primes satisfy this relation. This congruence can be checked
+in polynomial time when r is polynomial to the digits of n.
+The AKS algorithm evaluates this congruence for a large set of a values,
+whose size is polynomial to the digits of n. The proof of validity of the AKS
+algorithm shows that one can find an r and a set of a values with the above
+properties such that if the congruences hold then n is a power of a prime.
+The algorithm can be written as follows:
+Input:
+Integer n > 1.
+Output:
+1. If n = ab for a ∈ N and b > 1, return composite.
+2. Find the smallest r such that ordr(n) > (log2 n)2.
+3. If 1 < (a, n) < n for some a ≤ r, return composite.
+4. If n ≤ r, return prime.
+5. For a = 1 to ⌊
+√
+ϕ(r) log2 n⌋ do
+if (x + a)n ̸= xn + a (mod xr − 1, n), return composite;
+6. Return prime.
+Complexity:
+In the first version of the paper, the authors proved the asymptotic time
+complexity of the algorithm to be ˜O
+(
+log12 n
+)
+. However, this upper bound
+was rather loose; a widely-held conjecture about the distribution of the
+Sophie Germain primes would, if true, immediately cut the worst case down
+to ˜O
+(
+log6 n
+)
+.
+While the algorithm is of immense theoretical importance, it is not used
+in practice, for it is more complex, time-consuming and space-consuming
+than other algorithms like Miller–Rabin primality test.
+METHODS OF PRIMALITY TESTING
+7
+
+ If (a, n) = 1, then the order of a modulo n is the least power m
+such that am ≡ 1 mod n. We will write order(a) or |⟨a⟩| or |a| for the order of a.
+Equivalently, the order of a is the order of a considered as an element of the unit
+group U(Zn).
+Since the order of U(Zn) equals φ(n), we immediately get that the order of any
+element modulo n must divide φ(n). --></div>
+</div>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -229,11 +361,11 @@
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="ecpp.html" title="previous page">
+        <a class="left-prev" href="miller-rabin.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title">Miller-Rabin Primality Test</p>
             </div>
         </a>
     </div>
@@ -241,7 +373,7 @@
         <a class="right-next" href="rsa.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title">GCD</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
