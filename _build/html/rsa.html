@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GCD &#8212; Algorithm Analysis and Design Project</title>
+    <title>RSA &#8212; Algorithm Analysis and Design Project</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -55,6 +55,7 @@
     <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Greedy Algorithm for Egyptian Fractions" href="greedy.html" />
     <link rel="prev" title="AKS Primality Test" href="aks.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -126,7 +127,17 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   GCD
+   RSA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="greedy.html">
+   Greedy Algorithm for Egyptian Fractions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dp.html">
+   Longest path in DAGs
   </a>
  </li>
 </ul>
@@ -200,92 +211,73 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   GCD
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#euclid-s-algorithm">
+   Euclid’s Algorithm
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#naive-school-way">
-     Naive (school) way
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis">
+     Analysis
     </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#euclid-s-algorithm">
-     Euclid’s Algorithm
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#analysis">
-       Analysis
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#extended-euclid-s-algorithm">
-     Extended Euclid’s Algorithm
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#how-to-find-such-x-and-y">
-       How to find such x and y?
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#algorithm">
-       Algorithm
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extended-euclid-s-algorithm">
+   Extended Euclid’s Algorithm
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-to-find-such-x-and-y">
+     How to find such x and y?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     Algorithm
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#modular-inversion">
    Modular Inversion
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#modular-division-theorem">
-     Modular division theorem
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#public-key-cryptography">
    Public Key cryptography
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#ease-speed-of-operation-depends-on-representation">
      Ease/Speed of operation depends on representation
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#rsa-cryptosystem">
      RSA Cryptosystem
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#rsa">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
      RSA
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#rsa-correctness">
        RSA Correctness
       </a>
       <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
+       <li class="toc-h5 nav-item toc-entry">
         <a class="reference internal nav-link" href="#fermat-s-little-theorem">
          Fermat’s little theorem
         </a>
        </li>
       </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#rsa-correctness-revisited">
        RSA correctness revisited
       </a>
@@ -305,14 +297,8 @@
         
               <div>
                 
-  <div class="section" id="gcd">
-<h1>GCD<a class="headerlink" href="#gcd" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="naive-school-way">
-<h2>Naive (school) way<a class="headerlink" href="#naive-school-way" title="Permalink to this headline">¶</a></h2>
-<p>We factorize the two given integers a and b (given <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&gt;=</span> <span class="pre">b</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>). We take the common factors of both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> and compute the GCD. But this method is not feasible implementation-wise because factorization is not yet known to be in P class.</p>
-<p>The fastest algorithms for factoring <code class="docutils literal notranslate"><span class="pre">a</span></code> are super-polynomial in input size i.e., <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">a</span></code>.</p>
-<p>Euclid’s algorithm suggests an approach where we do not need to compute factorization of both numbers and can compute the GCD in rather linear time.</p>
-</div>
+  <div class="tex2jax_ignore mathjax_ignore section" id="rsa">
+<h1>RSA<a class="headerlink" href="#rsa" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="euclid-s-algorithm">
 <h2>Euclid’s Algorithm<a class="headerlink" href="#euclid-s-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>Euclid’s algorithm is a simple algorithm stated as follows:</p>
@@ -398,27 +384,23 @@ Dividend = Quotient * Divisor + Remainder</p>
 <p>Substituting this value of a mod b we can get the desired combination for a and b.</p>
 </div>
 </div>
-</div>
 <div class="section" id="modular-inversion">
-<h1>Modular Inversion<a class="headerlink" href="#modular-inversion" title="Permalink to this headline">¶</a></h1>
-<p>We say x is multiplicative inverse of a modulo N if <span class="math notranslate nohighlight">\(ax \eqiv 1 (mod N)\)</span>.</p>
-<p>This has a solution only when gcd(a, N) is 1 otherwise the remainder will never be 1 (remainder will always be a multiple of gcd).</p>
-<div class="section" id="modular-division-theorem">
-<h2>Modular division theorem<a class="headerlink" href="#modular-division-theorem" title="Permalink to this headline">¶</a></h2>
-<p>For any a mod N, a has a multiplicative inverse modulo N if and only if it is relatively prime to N. When the inverse exists it can be found in O(n^3) (n is the number of bits of N) by running extended Euclid algorithm.</p>
+<h2>Modular Inversion<a class="headerlink" href="#modular-inversion" title="Permalink to this headline">¶</a></h2>
+<p>We say <span class="math notranslate nohighlight">\(x\)</span> is multiplicative inverse of <span class="math notranslate nohighlight">\(a\)</span> modulo <span class="math notranslate nohighlight">\(N\)</span> if <span class="math notranslate nohighlight">\(ax \equiv 1 (mod N)\)</span>.
+This has a solution only when <span class="math notranslate nohighlight">\((a, N) = 1\)</span> otherwise the remainder will never be 1 (remainder will always be a multiple of gcd).</p>
+<p>The multiplicative inverse of a number <span class="math notranslate nohighlight">\(a\)</span> such that <span class="math notranslate nohighlight">\((a, N) = 1\)</span> can be found by running extended Euclid algorithm in <span class="math notranslate nohighlight">\(O(n^3)\)</span>.</p>
 <p>Thus continuing with our previous example we wish to compute 11^{-1} mod 25.
 Using extended Euclid algorithm we find that 15. 25 - 34.11 = 1.</p>
-<p>Reducing both sides modulo 25 we have <code class="docutils literal notranslate"><span class="pre">-34.11</span> <span class="pre">\equi</span> <span class="pre">1</span> <span class="pre">(mod</span>&#160; <span class="pre">25)</span></code></p>
-<p>So -34 \equi 16 mod 25 is the inverse of 11 mod 25.</p>
-</div>
+<p>Reducing both sides modulo 25 we have <code class="docutils literal notranslate"><span class="pre">-34.11</span> <span class="pre">\equiv</span> <span class="pre">1</span> <span class="pre">(mod</span>&#160; <span class="pre">25)</span></code></p>
+<p>So -34 \equiv 16 mod 25 is the inverse of 11 mod 25.</p>
 </div>
 <div class="section" id="public-key-cryptography">
-<h1>Public Key cryptography<a class="headerlink" href="#public-key-cryptography" title="Permalink to this headline">¶</a></h1>
+<h2>Public Key cryptography<a class="headerlink" href="#public-key-cryptography" title="Permalink to this headline">¶</a></h2>
 <p>Main Question in Public Key cryptography is if we publish our key how can we still maintain security.</p>
 <p>The answer lies in representation. The key can be represented in different ways. Thus the representation we share with the world is different from the one on our local machines.</p>
 <p>Thus, we think of two representations: public and private key which are the encryption and the decryption key respectively. The encryption algorithm runs very fast in the public key but decryption algorithm is very slow which runs faster in the private key.</p>
 <div class="section" id="ease-speed-of-operation-depends-on-representation">
-<h2>Ease/Speed of operation depends on representation<a class="headerlink" href="#ease-speed-of-operation-depends-on-representation" title="Permalink to this headline">¶</a></h2>
+<h3>Ease/Speed of operation depends on representation<a class="headerlink" href="#ease-speed-of-operation-depends-on-representation" title="Permalink to this headline">¶</a></h3>
 <p>We can represent numbers in their prime factorization, as decimals, or as in roman numeral form.</p>
 <p><img alt="representation" src="img/representation.png" /></p>
 <p>We can write/compute product of numbers faster in prime factor representation. (Only exponent addition to compute multiplication). Thus this representation is the best for multiplication.</p>
@@ -428,39 +410,40 @@ Using extended Euclid algorithm we find that 15. 25 - 34.11 = 1.</p>
 <p>Binary representation is faster for comparison and addition but not for multiplication.</p>
 </div>
 <div class="section" id="rsa-cryptosystem">
-<h2>RSA Cryptosystem<a class="headerlink" href="#rsa-cryptosystem" title="Permalink to this headline">¶</a></h2>
+<h3>RSA Cryptosystem<a class="headerlink" href="#rsa-cryptosystem" title="Permalink to this headline">¶</a></h3>
 <p>So we represent the key in two forms R_1 and R_2 essentially one representation has faster encryption (public) and the other one has faster decryption (private).</p>
 <p>Here, the algorithms depend on the representation utilized for cryptography.</p>
 </div>
-<div class="section" id="rsa">
-<h2>RSA<a class="headerlink" href="#rsa" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>RSA<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>Pick any two primes p and q and let N = p * q
 For any e relatively prime to (p - 1)(q - 1) the mapping f(x) =  x^e mod N is a bijection on {0, 1, …, N-1}
 Moreover, the inverse mapping is easily realized: let d be the inverse of e modulo (p -1)(q - 1).</p>
 <p>Then for all x in {0,…, N-1}</p>
 <p><code class="docutils literal notranslate"><span class="pre">(x^e)^d</span> <span class="pre">mod</span> <span class="pre">N</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">mod</span> <span class="pre">N</span></code></p>
 <div class="section" id="rsa-correctness">
-<h3>RSA Correctness<a class="headerlink" href="#rsa-correctness" title="Permalink to this headline">¶</a></h3>
+<h4>RSA Correctness<a class="headerlink" href="#rsa-correctness" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight">
 \[x^{ed} - x = x^{ 1 + k(p - 1)(q - 1) } - x\]</div>
 <p>This is always 0 modulo N. which we will show from Fermat’s little theorem.</p>
 <div class="section" id="fermat-s-little-theorem">
-<h4>Fermat’s little theorem<a class="headerlink" href="#fermat-s-little-theorem" title="Permalink to this headline">¶</a></h4>
+<h5>Fermat’s little theorem<a class="headerlink" href="#fermat-s-little-theorem" title="Permalink to this headline">¶</a></h5>
 <p>If p is prime then for every 1 &lt;= a &lt; p,
-$<span class="math notranslate nohighlight">\( a^{p - 1} \equi 1 (mod p)\)</span>$</p>
+$<span class="math notranslate nohighlight">\( a^{p - 1} \equiv 1 (mod p)\)</span>$</p>
 <p><strong>Proof</strong></p>
 <p>We assume <span class="math notranslate nohighlight">\(i \in {1,2,..., p - 1}\)</span>.</p>
-<p>The numbers a.i mod p are distinct because if <span class="math notranslate nohighlight">\(a.i \equi a.j (mod p)\)</span> then dividing both sides by a gives <span class="math notranslate nohighlight">\(i \equi j (mod p)\)</span>. They are nonzero because <span class="math notranslate nohighlight">\(a.i \equi 0\)</span> similarly implies <span class="math notranslate nohighlight">\(i \equi 0\)</span>. (and we can divide by a so we assume a is nonzero and therefore relatively prime to p).</p>
+<p>The numbers a.i mod p are distinct because if <span class="math notranslate nohighlight">\(a.i \equiv a.j (mod p)\)</span> then dividing both sides by a gives <span class="math notranslate nohighlight">\(i \equiv j (mod p)\)</span>. They are nonzero because <span class="math notranslate nohighlight">\(a.i \equiv 0\)</span> similarly implies <span class="math notranslate nohighlight">\(i \equiv 0\)</span>. (and we can divide by a so we assume a is nonzero and therefore relatively prime to p).</p>
 <p>Thus,
 <code class="docutils literal notranslate"><span class="pre">{1,2,...,</span> <span class="pre">p</span> <span class="pre">-</span> <span class="pre">1}</span> <span class="pre">=</span> <span class="pre">{a</span> <span class="pre">.</span> <span class="pre">1</span> <span class="pre">mod</span> <span class="pre">p,</span> <span class="pre">a</span> <span class="pre">.</span> <span class="pre">2</span> <span class="pre">mod</span> <span class="pre">p,...,</span> <span class="pre">a</span> <span class="pre">.</span> <span class="pre">(p</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">mod</span> <span class="pre">p}</span></code></p>
 <p>If we multiply together its elements in each of these representations we get
-$<span class="math notranslate nohighlight">\((p - 1)! \equi a^{p - 1} . (p - 1)! (mod p)\)</span>$</p>
+$<span class="math notranslate nohighlight">\((p - 1)! \equiv a^{p - 1} . (p - 1)! (mod p)\)</span>$</p>
 <p>Dividing each side by <span class="math notranslate nohighlight">\((p - 1)!\)</span> we get the proof to our theorem.</p>
 </div>
 </div>
 <div class="section" id="rsa-correctness-revisited">
-<h3>RSA correctness revisited<a class="headerlink" href="#rsa-correctness-revisited" title="Permalink to this headline">¶</a></h3>
-<p>The second form of the expression is convenient when simplified using Fermat’s theorem. It is divisible by p (since <span class="math notranslate nohighlight">\(x^{p - 1} \equi 1 mod p\)</span>) and likewise by q. Since p and q are primes, this expression thus becomes divisible by their product N. Hence, RSA is proved.</p>
+<h4>RSA correctness revisited<a class="headerlink" href="#rsa-correctness-revisited" title="Permalink to this headline">¶</a></h4>
+<p>The second form of the expression is convenient when simplified using Fermat’s theorem. It is divisible by p (since <span class="math notranslate nohighlight">\(x^{p - 1} \equiv 1 mod p\)</span>) and likewise by q. Since p and q are primes, this expression thus becomes divisible by their product N. Hence, RSA is proved.</p>
+</div>
 </div>
 </div>
 </div>
@@ -503,6 +486,15 @@ $<span class="math notranslate nohighlight">\((p - 1)! \equi a^{p - 1} . (p - 1)
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="greedy.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Greedy Algorithm for Egyptian Fractions</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         

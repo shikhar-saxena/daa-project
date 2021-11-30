@@ -4,15 +4,12 @@
 format: jb-book
 root: prelim 
 chapters:
-- file: trial-division #########
-# - file: sieve #########
+- file: trial-division 
 - file: probabilistic
   sections:
-  - file: fermat-test ########
-  # - file: lehmer-test #########
-  - file: miller-rabin #########
-  # - file: solovay-strassen #########
+  - file: fermat-test 
+  - file: miller-rabin
 - file: aks ############
 - file: rsa ########
-# - file: greedy #######
-# - file: dp ########
+- file: greedy 
+- file: dp ########

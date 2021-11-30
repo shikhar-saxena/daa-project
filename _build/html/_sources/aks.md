@@ -73,6 +73,9 @@ Input: $n \ge 2$
 6. Return PRIME.
 ```
 
+Here, $ord_r(n)$ is the order of the element $n$ within the group $\mathbb{Z}^*_r$.
+
+
 <!-- 
 While the lemma constitutes a primality test in itself, verifying it takes
 exponential time: the brute force approach would require the expansion
@@ -130,3 +133,10 @@ Equivalently, the order of a is the order of a considered as an element of the u
 group U(Zn).
 Since the order of U(Zn) equals φ(n), we immediately get that the order of any
 element modulo n must divide φ(n). -->
+
+<!-- π(x)
+x
+∼
+1
+ln x as x → ∞,
+where π(x) represents the number of primes less than the positive real number x. -->

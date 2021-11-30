@@ -127,7 +127,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="rsa.html">
-   GCD
+   RSA
   </a>
  </li>
 </ul>
@@ -202,21 +202,9 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#proof">
-   Proof
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#for-composite-numbers">
    For Composite Numbers
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Proof
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -231,69 +219,74 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="miller-rabin-primality-test">
 <h1>Miller-Rabin Primality Test<a class="headerlink" href="#miller-rabin-primality-test" title="Permalink to this headline">¶</a></h1>
-<p>Prime = “On input p:</p>
+<div class="proof algorithm admonition" id="algorithm-0">
+<p class="admonition-title"><span class="caption-number">Algorithm 4 </span> (Miller Rabin Test)</p>
+<div class="algorithm-content section" id="proof-content">
+<p><strong>Input:</strong> Integer <span class="math notranslate nohighlight">\(p &gt; 1\)</span></p>
 <ol class="simple">
-<li><p>If p is even, accept if p = 2; otherwise reject.</p></li>
-<li><p>Select <span class="math notranslate nohighlight">\(a_1, a_2, ..., a_k\)</span> randomly in <span class="math notranslate nohighlight">\(Z_p^+\)</span>.</p></li>
-<li><p>For each i from 1 to k:</p></li>
-<li><p>Compute <span class="math notranslate nohighlight">\(a_i^{p - 1}\)</span> mod p and reject if different from 1.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(p\)</span> is even, return PRIME if <span class="math notranslate nohighlight">\(p = 2\)</span>; otherwise return COMPOSITE.</p></li>
+<li><p>Select <span class="math notranslate nohighlight">\(a_1, a_2, \ldots , a_k\)</span> randomly in <span class="math notranslate nohighlight">\(\mathbb{Z}_p^+\)</span>.</p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(i\)</span> from 1 to <span class="math notranslate nohighlight">\(k\)</span>:</p>
+<ol class="simple">
+<li><p>Compute <span class="math notranslate nohighlight">\(a_i^{p - 1}\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> and reject if different from 1.</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(p - 1 = st\)</span> where s is odd and <span class="math notranslate nohighlight">\(t = 2^h\)</span> is a power of 2</p></li>
-<li><p>Compute the sequence <span class="math notranslate nohighlight">\(a_i^{s 2^0}, a_i^{s 2^1},..., a_i^{s 2^h}\)</span> modulo p.</p></li>
+<li><p>Compute the sequence <span class="math notranslate nohighlight">\(a_i^{s 2^0}, a_i^{s 2^1},..., a_i^{s 2^h}\)</span> modulo <span class="math notranslate nohighlight">\(p\)</span>.</p></li>
 <li><p>If some element of this sequence is not 1 find the last element that is not 1 and reject if that element is not -1.</p></li>
+</ol>
+</li>
 <li><p>All tests have passed at this point so accept.”</p></li>
 </ol>
-<p>There’s a very less probable chance that the number is composite and the algorithm accepts it as prime.</p>
-<p>In step <code class="docutils literal notranslate"><span class="pre">4</span></code> we know by Fermat’s Little Theorem, that for prime numbers the remainder will be 1. Of course there can be composite numbers with remainder as 1 (for which we do the further steps). Thus, here we eliminate the number if its remainder is not 1.</p>
-<p>Since <code class="docutils literal notranslate"><span class="pre">p</span></code> is odd at this point so <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">-</span> <span class="pre">1</span></code> is even and is assumed to be <code class="docutils literal notranslate"><span class="pre">st</span></code> where <code class="docutils literal notranslate"><span class="pre">s</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are assumed as above.</p>
-<p>Now, we start from 0 as the power of 2 and go on till <span class="math notranslate nohighlight">\(2^h = t\)</span> and for each we check <span class="math notranslate nohighlight">\(a_i^{s 2^h}\)</span> modulo p. We know this sequence always ends at 1 (we calculated this in step <code class="docutils literal notranslate"><span class="pre">4</span></code>). This sequence will have all terms from 1 to p - 1 (since 0 is not possible by this step). We read the sequence from right to left. If some element of this sequence is not 1 we reject if that element is not -1.</p>
-<div class="section" id="proof">
-<h2>Proof<a class="headerlink" href="#proof" title="Permalink to this headline">¶</a></h2>
-<p>If p is prime then algorithm will always accept. In step 4, it will always give 1 due to Fermat’s little theorem and here it will never reject. Next it may reject at step 7.</p>
+</div>
+</div><p>There’s a very less probable chance that the number is composite and the algorithm accepts it as prime.</p>
+<p>In step 4, we know by Fermat’s Little Theorem, that for prime numbers the remainder will be 1. Of course there can be composite numbers with remainder as 1 (for which we do the further steps). Thus, here we eliminate the number if its remainder is not 1.</p>
+<p>Since <span class="math notranslate nohighlight">\(p\)</span> is odd at this point so <span class="math notranslate nohighlight">\(p - 1\)</span> is even and is assumed to be <span class="math notranslate nohighlight">\(st\)</span> where <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(t\)</span> are assumed as above.</p>
+<p>Now, we start from 0 as the power of 2 and go on till <span class="math notranslate nohighlight">\(2^h = t\)</span> and for each we check <span class="math notranslate nohighlight">\(a_i^{s 2^h}\)</span> modulo p. We know this sequence always ends at 1 (we calculated this in step 4). This sequence will have all terms from <span class="math notranslate nohighlight">\(1\)</span> to <span class="math notranslate nohighlight">\(p - 1\)</span> (since 0 is not possible by this step). We read the sequence from right to left. If some element of this sequence is not 1 we reject if that element is not -1.</p>
+<div class="proof admonition" id="proof">
+<p>Proof. If p is prime then algorithm will always accept. In step 4, it will always give 1 due to Fermat’s little theorem and here it will never reject. Next it may reject at step 7.</p>
 <p>We prove that the first number (reading from right to left) that is not 1 will be -1 for a prime input.</p>
 <p>Notice that last number is 1. And the element before it is the square root of this number. And every previous element is the square root of the next element.</p>
-<p>So let’s say we encounter the element <code class="docutils literal notranslate"><span class="pre">b</span></code> whose modulo is not 1.</p>
-<p>Therefore, <span class="math notranslate nohighlight">\(b \not \equiv 1 (\text{mod} p)\)</span> and <span class="math notranslate nohighlight">\(b^2 \equiv 1 (\text{mod} p)\)</span>.</p>
+<p>So let’s say we encounter the element <span class="math notranslate nohighlight">\(b\)</span> whose modulo is not 1.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(b \not \equiv 1 \; (\text{mod } p)\)</span> and <span class="math notranslate nohighlight">\(b^2 \equiv 1 \; (\text{mod } p)\)</span></p>
 <div class="math notranslate nohighlight">
-\[\implies b^2 - 1 \equiv 0 (\text{mod} p)\]</div>
+\[\implies b^2 - 1 \equiv 0\; (\text{mod } p)\]</div>
 <div class="math notranslate nohighlight">
-\[\implies (b - 1)(b + 1) \equiv 0 (\text{mod} p)\]</div>
-<p>By Euclid’s lemma,</p>
-<blockquote>
-<div><p>If a prime p divides the product ab of two integers a and b, then p must divide at least one of those integers a and b.</p>
-</div></blockquote>
-<p>which means that if p is prime it divides one of the factors <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">-</span> <span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">+</span> <span class="pre">1</span></code>, implying that b is congruent to either 1  or -1 modulo n.
-From our assumption, therefore <span class="math notranslate nohighlight">\(b \equiv -1 (mod n)\)</span>.</p>
-<p>This explains step <code class="docutils literal notranslate"><span class="pre">7</span></code> in our algorithm. If all tests are passed then we accept it.</p>
+\[\implies (b - 1)(b + 1) \equiv 0 \; (\text{mod } p)\]</div>
+<p>By Euclid’s lemma, we know that p divides one of the factors <span class="math notranslate nohighlight">\(b - 1\)</span> or <span class="math notranslate nohighlight">\(b + 1\)</span>, implying that <span class="math notranslate nohighlight">\(b\)</span> is congruent to either 1 or -1 modulo n.
+From our assumption, therefore <span class="math notranslate nohighlight">\(b \equiv -1\)</span> (mod n).</p>
+<p>This explains step 7 in our algorithm. If all tests are passed then we accept it.</p>
 <p>Therefore, Probability(Algorithm accepts prime numbers) = 1.</p>
 </div>
 <div class="section" id="for-composite-numbers">
 <h2>For Composite Numbers<a class="headerlink" href="#for-composite-numbers" title="Permalink to this headline">¶</a></h2>
-<p>If <code class="docutils literal notranslate"><span class="pre">p</span></code> is an odd composite number and <code class="docutils literal notranslate"><span class="pre">a</span></code> is selected randomly in <span class="math notranslate nohighlight">\(Z_p^+\)</span>, then we prove that Probability(a is a witness) &gt;= 1/2 by demonstrating that at least as many witnesses as non witnesses exist in <span class="math notranslate nohighlight">\(Z_p^+\)</span>.</p>
-<p>Here, witness means that <code class="docutils literal notranslate"><span class="pre">a</span></code> confirms that <code class="docutils literal notranslate"><span class="pre">p</span></code> is composite (from the Miller-Rabin Test). And non-witness means that <code class="docutils literal notranslate"><span class="pre">a</span></code> gives prime for <code class="docutils literal notranslate"><span class="pre">p</span></code> when <code class="docutils literal notranslate"><span class="pre">p</span></code> is composite.</p>
-<div class="section" id="id1">
-<h3>Proof<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>In every non witness, the sequence computed in stage 6 is either all 1s or contains -1 at some location followed by 1s. For example, 1 itself is a non witness of the first kind and -1 is a non witness of the second kind since s is odd and <span class="math notranslate nohighlight">\((-1)^{s 2^0} \equiv -1\)</span> and <span class="math notranslate nohighlight">\((-1)^{s 2^1} \equiv 1\)</span>.</p>
-<p>Among all these non-witnesses, we consider h to be the non witness where -1 appears at the rightmost position in the sequence and let that position be j (positions numbered from 0). Hence, <span class="math notranslate nohighlight">\(h^{s 2^j} \equiv -1\)</span> (mod p).</p>
-<p>Because p is composite, either p is exact prime power or it has atleast two prime factors and we can write it as product of <code class="docutils literal notranslate"><span class="pre">q</span></code> and <code class="docutils literal notranslate"><span class="pre">r</span></code>, which are relatively prime. We consider the latter case first. Therefore by the Chinese remainder theorem, some number t exists in <span class="math notranslate nohighlight">\(Z_p\)</span> such that</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> \<span class="n">equiv</span> <span class="n">h</span> <span class="p">(</span><span class="n">mod</span> <span class="n">q</span><span class="p">)</span> <span class="ow">and</span>
-<span class="n">t</span> \<span class="n">equiv</span> <span class="mi">1</span> <span class="p">(</span><span class="n">mod</span> <span class="n">r</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>If <span class="math notranslate nohighlight">\(p\)</span> is an odd composite number and <span class="math notranslate nohighlight">\(a\)</span> is selected randomly in <span class="math notranslate nohighlight">\(Z_p^+\)</span>, then we prove that Probability(a is a witness) <span class="math notranslate nohighlight">\(\ge 1/2\)</span> by demonstrating that at least as many witnesses as non witnesses exist in <span class="math notranslate nohighlight">\(Z_p^+\)</span>.</p>
+<p>Here, witness means that <span class="math notranslate nohighlight">\(a\)</span> confirms that <span class="math notranslate nohighlight">\(p\)</span> is composite (from the Miller-Rabin Test). And non-witness means that <span class="math notranslate nohighlight">\(a\)</span> gives prime for <span class="math notranslate nohighlight">\(p\)</span> when <span class="math notranslate nohighlight">\(p\)</span> is composite.</p>
+<div class="proof admonition" id="proof">
+<p>Proof. In every non witness, the sequence computed in stage 6 is either all 1s or contains -1 at some location followed by 1s. For example, 1 itself is a non witness of the first kind and -1 is a non witness of the second kind since s is odd and <span class="math notranslate nohighlight">\((-1)^{s 2^0} \equiv -1\)</span> and <span class="math notranslate nohighlight">\((-1)^{s 2^1} \equiv 1\)</span>.</p>
+<p>Among all these non-witnesses, we consider <span class="math notranslate nohighlight">\(h\)</span> to be the non witness where -1 appears at the rightmost position in the sequence and let that position be j (positions numbered from 0). Hence, <span class="math notranslate nohighlight">\(h^{s 2^j} \equiv -1\)</span> (mod p).</p>
+<p>Because p is composite, either p is exact prime power or it has atleast two prime factors and we can write it as product of <span class="math notranslate nohighlight">\(q\)</span> and <span class="math notranslate nohighlight">\(r\)</span>, which are relatively prime. We consider the latter case first. Therefore by the Chinese remainder theorem, some number t exists in <span class="math notranslate nohighlight">\(Z_p\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}t \equiv h\; (\text{mod } q),\\
+t \equiv 1\; (\text{mod } r)\end{split}\]</div>
 <p>Therefore,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">^</span><span class="p">{</span><span class="n">s</span> <span class="mi">2</span><span class="o">^</span><span class="n">j</span><span class="p">}</span> \<span class="n">equiv</span> <span class="o">-</span><span class="mi">1</span> <span class="p">(</span><span class="n">mod</span> <span class="n">q</span><span class="p">)</span>
-<span class="n">t</span><span class="o">^</span><span class="p">{</span><span class="n">s</span> <span class="mi">2</span><span class="o">^</span><span class="n">j</span><span class="p">}</span> \<span class="n">equiv</span>  <span class="mi">1</span> <span class="p">(</span><span class="n">mod</span> <span class="n">r</span><span class="p">)</span>
-</pre></div>
-</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}t^{s 2^j} \equiv -1 (\text{mod } q)\\
+t^{s 2^j} \equiv  1 (\text{mod } r)\end{split}\]</div>
 <p>Hence, t is a witness because <span class="math notranslate nohighlight">\(t^{s 2^j} \not \equiv \pm 1\)</span> (mod p) but <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}} \equiv 1\)</span> (mod p).</p>
-<p>Since, <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}} \equiv 1\)</span> for both mod q and mod r thus it will also hold for mod p. But at j^th location it is -1 for mod q and 1 for mod r. Therefore, it cannot be <span class="math notranslate nohighlight">\(\pm 1\)</span> for mod p. Thus t will becomes a witness in this case.</p>
-<p>Now, that we have one witness we can show that <span class="math notranslate nohighlight">\(dt mod p\)</span> is a unique witness for each non witness d by making two more observations:</p>
-<p>First, <span class="math notranslate nohighlight">\(d^{s 2^j} \equiv \pm 1\)</span> (mod p) and <span class="math notranslate nohighlight">\(d^{s 2^{j + 1}} \equiv 1\)</span> (mod p) owing to the way j was chosen. Therefore <code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">mod</span> <span class="pre">p</span></code> is a witness because <span class="math notranslate nohighlight">\((dt)^{s 2^j} \not \equiv \pm 1\)</span> (mod p) and <span class="math notranslate nohighlight">\((dt)^{s 2^{j + 1}} \equiv 1\)</span> (mod p).</p>
-<p>Second, d_1 and d_2 are distinct non witnesses, d_1 t mod p not equal to d_2 t mod p. The reason is that <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}}\)</span> mod p = 1. Hence, <span class="math notranslate nohighlight">\(t.t^{s 2^{j + 1} - 1}\)</span> mod p = 1. Therefore, if t d_1 mod p = t d_2 mod p, then</p>
-<p><span class="math notranslate nohighlight">\(d_1 = t.t^{s 2^{j + 1} - 1} d_1 mod p = t.t^{s 2^{j + 1} - 1} d_2 mod p = d_2\)</span>.</p>
+<p>Since, <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}} \equiv 1\)</span> for both mod <span class="math notranslate nohighlight">\(q\)</span> and mod <span class="math notranslate nohighlight">\(r\)</span> thus it will also hold for mod <span class="math notranslate nohighlight">\(p\)</span>. But at <span class="math notranslate nohighlight">\(j^{th}\)</span> location it is -1 for mod <span class="math notranslate nohighlight">\(q\)</span> and 1 for mod <span class="math notranslate nohighlight">\(r\)</span>. Therefore, it cannot be <span class="math notranslate nohighlight">\(\pm 1\)</span> for mod p. Thus <span class="math notranslate nohighlight">\(t\)</span> will becomes a witness in this case.</p>
+<p>Now, that we have one witness we can show that <span class="math notranslate nohighlight">\(dt\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> is a unique witness for each non witness d by making two more observations:</p>
+<p>First, <span class="math notranslate nohighlight">\(d^{s 2^j} \equiv \pm 1\)</span> (mod p) and <span class="math notranslate nohighlight">\(d^{s 2^{j + 1}} \equiv 1\)</span> (mod p) owing to the way j was chosen. Therefore <span class="math notranslate nohighlight">\(dt\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> is a witness because <span class="math notranslate nohighlight">\((dt)^{s 2^j} \not \equiv \pm 1\)</span> (mod p) and <span class="math notranslate nohighlight">\((dt)^{s 2^{j + 1}} \equiv 1\)</span> (mod p).</p>
+<p>Second, d_1 and d_2 are distinct non witnesses, <span class="math notranslate nohighlight">\(d_1 t\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> not equal to <span class="math notranslate nohighlight">\(d_2 t\)</span> mod <span class="math notranslate nohighlight">\(p\)</span>. The reason is that <span class="math notranslate nohighlight">\(t^{s 2^{j + 1}}\)</span> mod p = 1. Hence, <span class="math notranslate nohighlight">\(t.t^{s 2^{j + 1} - 1}\)</span> mod p = 1. Therefore, if <span class="math notranslate nohighlight">\(t d_1\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> = <span class="math notranslate nohighlight">\(t d_2\)</span> mod <span class="math notranslate nohighlight">\(p\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}d_1 = t \cdot t^{s 2^{j + 1} - 1} d_1 \; \text{mod } p \\
+ = t\cdot t^{s 2^{j + 1} - 1} d_2 \; \text{mod } p \\
+ = d_2\end{split}\]</div>
 <p>Thus, the number of witnesses must be as large as the number of non witnesses and we have completed the analysis for the case where p is not a prime factor.</p>
-<p>For the prime power case we have p = q^e where q is prime and e &gt; 1. Let t = 1 + q^{e - 1}. Expanding t^p using the binomial theorem we obtain</p>
-<p><span class="math notranslate nohighlight">\(t^p = (1 + q^{e - 1})^p = 1 + p q^{e - 1}\)</span> + multiples of higher powers of q^{e - 1} which is congruent to 1 mod p. Hence, t is a stage for witness because if t^{p − 1} \equiv 1 (mod p), then <span class="math notranslate nohighlight">\(t^p \equiv t \not \equiv 1\)</span> (mod p). As in the previous case, we use this one witness to get many others. If d is a non witness we have d^{p - 1} \equiv 1 (mod p) but then dt mod p is a witness. Moreover if d_1 and d_2 are distinct non witnesses, then d_1 t mod p not equal to d_2 t mod p. Otherwise,</p>
-<p><span class="math notranslate nohighlight">\(d_1 = d_1 t t^{p - 1} mod p = d_2 t t^{p - 1} mod p = d_2\)</span>.</p>
+<p>For the prime power case we have <span class="math notranslate nohighlight">\(p = q^e\)</span> where <span class="math notranslate nohighlight">\(q\)</span> is prime and <span class="math notranslate nohighlight">\(e &gt; 1\)</span>. Let <span class="math notranslate nohighlight">\(t = 1 + q^{e - 1}\)</span>. Expanding <span class="math notranslate nohighlight">\(t^p\)</span> using the binomial theorem we obtain</p>
+<p><span class="math notranslate nohighlight">\(t^p = (1 + q^{e - 1})^p = 1 + p q^{e - 1}\)</span> + multiples of higher powers of <span class="math notranslate nohighlight">\(q^{e - 1}\)</span> which is congruent to 1 mod p. Hence, t is a stage for witness because if <span class="math notranslate nohighlight">\(t^{p − 1} \equiv 1\)</span> (mod p), then <span class="math notranslate nohighlight">\(t^p \equiv t \not \equiv 1\)</span> (mod p). As in the previous case, we use this one witness to get many others. If d is a non witness we have <span class="math notranslate nohighlight">\(d^{p - 1} \equiv 1\)</span> (mod p) but then <span class="math notranslate nohighlight">\(dt\)</span> mod p is a witness. Moreover if <span class="math notranslate nohighlight">\(d_1\)</span> and <span class="math notranslate nohighlight">\(d_2\)</span> are distinct non witnesses, then <span class="math notranslate nohighlight">\(d_1 t\)</span> mod p not equal to <span class="math notranslate nohighlight">\(d_2 t\)</span> mod p. Otherwise,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}d_1 = d_1 t t^{p - 1} \;\text{mod } p\\
+ = d_2 t t^{p - 1} \;\text{mod } p \\
+ = d_2\end{split}\]</div>
 <p>Thus the number of witnesses must be as large as the number of non-witnesses and the proof is complete.</p>
 </div>
 </div>

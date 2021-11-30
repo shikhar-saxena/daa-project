@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; Algorithm Analysis and Design Project</title>
+    <title>Longest path in DAGs &#8212; Algorithm Analysis and Design Project</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -43,6 +43,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -53,6 +55,7 @@
     <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Greedy Algorithm for Egyptian Fractions" href="greedy.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -88,7 +91,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="trial-division.html">
    Trial Division Test
@@ -123,7 +126,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="rsa.html">
-   GCD
+   RSA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="greedy.html">
+   Greedy Algorithm for Egyptian Fractions
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Longest path in DAGs
   </a>
  </li>
 </ul>
@@ -196,7 +209,51 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solution">
+   Solution
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-doesn-t-longest-path-in-dag-solution-for-hamiltonian-paths">
+     Why doesn’t longest path in DAG solution for Hamiltonian paths?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#longest-increasing-subsequence-lis">
+   Longest increasing subsequence (LIS)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example">
+     Example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#underlying-dag-here">
+     Underlying DAG here
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-dag-of-sub-problems">
+     Our DAG of Sub-Problems
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     Algorithm
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dynamic-programming-things-to-note">
+   Dynamic Programming: Things to note
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -208,7 +265,70 @@
         
               <div>
                 
-  
+  <div class="tex2jax_ignore mathjax_ignore section" id="longest-path-in-dags">
+<h1>Longest path in DAGs<a class="headerlink" href="#longest-path-in-dags" title="Permalink to this headline">¶</a></h1>
+<p>Longest path in a general graph is NP-complete. Problem of Hamiltonian path is NP-complete (Hamiltonian paths are the longest path). However, in DAGs finding longest part can be solved using Dynamic Programming.</p>
+<p>Dynamic Programming is just a DAG of sub-problems. Once we find the order in which subproblems are solved (and how they depend on each other) we can use recursion in that order and employ dynamic programming. We can construct the DAG for our problem and topologically sort it.</p>
+<div class="section" id="solution">
+<h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
+<p>We can modify the algorithm for shortest path in DAGs stated above to find the solution for this problem. The solution will be correlated to the longest subsequence problem stated later and hence the algorithm for that question will serve as a dynamic programming solution for this question as well.</p>
+<div class="section" id="why-doesn-t-longest-path-in-dag-solution-for-hamiltonian-paths">
+<h3>Why doesn’t longest path in DAG solution for Hamiltonian paths?<a class="headerlink" href="#why-doesn-t-longest-path-in-dag-solution-for-hamiltonian-paths" title="Permalink to this headline">¶</a></h3>
+<p>If there are cycles in a path, then there will be deadlocks (during recursion). In a general graph there can be cycles and back edges. In such a case Dynamic Programming will not work. That’s why this problem is tougher.</p>
+</div>
+</div>
+<div class="section" id="longest-increasing-subsequence-lis">
+<h2>Longest increasing subsequence (LIS)<a class="headerlink" href="#longest-increasing-subsequence-lis" title="Permalink to this headline">¶</a></h2>
+<p>(Input): Sequence of numbers <span class="math notranslate nohighlight">\(a_1, \cdots , a_n\)</span>
+A subsequence is <span class="math notranslate nohighlight">\(a_{i_1},a_{i_2},\cdots, a_{i_k}\)</span> where <span class="math notranslate nohighlight">\(1 \le i_1 &lt; i_2 &lt; \cdots i_k \le n\)</span>.</p>
+<p>An increasing subsequence is one in which numbers are getting strictly larger.</p>
+<p><strong>The task is to find the increasing subsequence of greatest length.</strong></p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>The sequence is 5, 2, 8, 6, 3, 6, 9, 7.</p>
+<p>Subsequences can be 5, 2, 8, 7; etc.</p>
+<p>Increasing subsequences are 5, 8, 9; 2, 6, 7; and the longest one is 2, 3, 6, 9.</p>
+</div>
+<div class="section" id="underlying-dag-here">
+<h3>Underlying DAG here<a class="headerlink" href="#underlying-dag-here" title="Permalink to this headline">¶</a></h3>
+<p>Establish a node i for each element a_i and add directed edges (i, j) whenever it is possible for a_i and a_j to be consecutive elements in an increasing subsequence i.e., whenever i &lt; j and a_i &lt; a_j.</p>
+<p>So the underlying DAG for our example looks like:
+<img alt="subsequence" src="img/subsequence.png" /></p>
+<p>Notice that all edges will be from left to right by our definition. So this DAG is already topologically sorted. Here, the longest subsequence is nothing but the longest path in the DAG. But here, the longest path may not start from the first node.</p>
+</div>
+<div class="section" id="our-dag-of-sub-problems">
+<h3>Our DAG of Sub-Problems<a class="headerlink" href="#our-dag-of-sub-problems" title="Permalink to this headline">¶</a></h3>
+<p>We define L(j) is the length of the longest path-the longest increasing subsequence-ending at j. We know these problems are overlapping.</p>
+<p>collection of subproblems {L(j): 1 &lt;= j &lt;= n}</p>
+<p>So, we can define our subproblems as follows:
+$<span class="math notranslate nohighlight">\(L(j) = 1 + max{L(i): (i,j) \in E}\)</span>$</p>
+<p>This recursion will not get into deadlock. So we can employ this dynamic programming to compute the longest path.</p>
+<p><em><strong>Dynamic Programming: There is an ordering on the subproblems, and a relation that shows how to solve a subproblem given the answers to smaller subproblems, that is, subproblems that appear earlier in the ordering</strong></em></p>
+<p>Here, each L_i can be stored into an array for constant lookup for further cases. This is also known as table of answers to the subproblems. Here, it is a 1-D array. But in tougher problems there can be more parameters involved which can lead to higher dimension arrays.</p>
+<p>Here, base case L(1) = 1 (since we will count the first element).</p>
+</div>
+<div class="section" id="algorithm">
+<h3>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span>
+	<span class="n">L</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">{</span><span class="n">L</span><span class="p">(</span><span class="n">i</span><span class="p">):</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> \<span class="ow">in</span> <span class="n">E</span><span class="p">}</span>
+<span class="k">return</span> <span class="n">max_j</span> <span class="n">L</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dynamic-programming-things-to-note">
+<h2>Dynamic Programming: Things to note<a class="headerlink" href="#dynamic-programming-things-to-note" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>How do you get to the sub-problems?</p></li>
+<li><p>Once you get the sub-problems, how do you get the formula relating the sub-problems to employ recursion?</p></li>
+<li><p>Once you get the formula, in what order do we need to execute the sub-problems?</p></li>
+</ul>
+<p>All these questions are answered by the underlying DAG of subproblems.</p>
+<p>We may get complicated nested loops in tougher problems of dynamic programming.</p>
+<p>So we try to define the i^th subproblem to be the i^th node so that the order is manageable in the implementation of the question.</p>
+</div>
+</div>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -238,6 +358,15 @@
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="greedy.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Greedy Algorithm for Egyptian Fractions</p>
+            </div>
+        </a>
+    </div>
 
 </div>
         

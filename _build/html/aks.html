@@ -55,7 +55,7 @@
     <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="GCD" href="rsa.html" />
+    <link rel="next" title="RSA" href="rsa.html" />
     <link rel="prev" title="Miller-Rabin Primality Test" href="miller-rabin.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -127,7 +127,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="rsa.html">
-   GCD
+   RSA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="greedy.html">
+   Greedy Algorithm for Egyptian Fractions
   </a>
  </li>
 </ul>
@@ -259,7 +264,7 @@ Therefore, by fundamental theorem of arithmetic, we know for some <span class="m
 \[(X + a)^n \equiv X^n + a \quad (\text{mod } X^r - 1, n)\]</div>
 <p>This will lower the degree of the polynomial and thus reduce the number of coefficients needed to be calculated to confirm the test.</p>
 <div class="proof algorithm admonition" id="algorithm-1">
-<p class="admonition-title"><span class="caption-number">Algorithm 4 </span> (AKS Primality Test)</p>
+<p class="admonition-title"><span class="caption-number">Algorithm 5 </span> (AKS Primality Test)</p>
 <div class="algorithm-content section" id="proof-content">
 <p>Input: <span class="math notranslate nohighlight">\(n \ge 2\)</span></p>
 <ol class="simple">
@@ -272,7 +277,8 @@ Therefore, by fundamental theorem of arithmetic, we know for some <span class="m
 <li><p>Return PRIME.</p></li>
 </ol>
 </div>
-</div><!-- 
+</div><p>Here, <span class="math notranslate nohighlight">\(ord_r(n)\)</span> is the order of the element <span class="math notranslate nohighlight">\(n\)</span> within the group <span class="math notranslate nohighlight">\(\mathbb{Z}^*_r\)</span>.</p>
+<!-- 
 While the lemma constitutes a primality test in itself, verifying it takes
 exponential time: the brute force approach would require the expansion
 of the (x + a)n polynomial and a reduction modn of the resulting n + 1
@@ -328,7 +334,13 @@ such that am ≡ 1 mod n. We will write order(a) or |⟨a⟩| or |a| for the ord
 Equivalently, the order of a is the order of a considered as an element of the unit
 group U(Zn).
 Since the order of U(Zn) equals φ(n), we immediately get that the order of any
-element modulo n must divide φ(n). --></div>
+element modulo n must divide φ(n). -->
+<!-- π(x)
+x
+∼
+1
+ln x as x → ∞,
+where π(x) represents the number of primes less than the positive real number x. --></div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -373,7 +385,7 @@ element modulo n must divide φ(n). --></div>
         <a class="right-next" href="rsa.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">GCD</p>
+                <p class="prevnext-title">RSA</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

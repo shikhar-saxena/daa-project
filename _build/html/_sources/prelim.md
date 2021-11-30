@@ -1,6 +1,6 @@
 # Introduction
 
-This project does a thorough exploration of Primality-Testing Algorithms and also covers the design and analysis of some Greedy and Dynamic Programming algorithms.
+This project does a thorough exploration of Primality-Testing Algorithms and also covers some Greedy and Dynamic Programming algorithms.
 
 We will assume that the reader is familiar with the basic arithmetic properties of class of integers $\mathbb{Z}$.
 Some prelimnaries are covered henceforth:
@@ -96,3 +96,15 @@ The $\tilde{O}$ notation is useful to avoid terms like $\log n$ and $\log \log n
 
 For example, it is easier to write $\tilde{O}(n)$ than the (more precise) $O(n log n log log n)$.
 ````
+
+## The Density of Prime Numbers
+
+The prime distribution function $\pi(n)$ denotes the number of primes that are less than or equal to n. For example, $\pi(10) = 4$, since there are 4 prime numbers less than or equal to 10, namely, 2, 3, 5, and 7. 
+
+The prime number theorem gives a useful approximation to $\pi(n)$.
+
+````{prf:theorem}
+lim_{n -> \infty} \frac{\pi(n)}{n/\text{ln } n} = 1
+````
+
+This bound can be used to estimate $\pi(n)$ with reasonable accuracy.

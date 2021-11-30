@@ -1,12 +1,4 @@
-## GCD
-
-### Naive (school) way
-
-We factorize the two given integers a and b (given `a >= b >= 0`). We take the common factors of both `a` and `b` and compute the GCD. But this method is not feasible implementation-wise because factorization is not yet known to be in P class.
-
-The fastest algorithms for factoring `a` are super-polynomial in input size i.e., `log a`. 
-
-Euclid's algorithm suggests an approach where we do not need to compute factorization of both numbers and can compute the GCD in rather linear time.
+# RSA
 
 ### Euclid's Algorithm
 
@@ -119,20 +111,18 @@ or a mod b = a - (\lfloor a/b \rfloor) * b
 Substituting this value of a mod b we can get the desired combination for a and b.
 
 ## Modular Inversion
-We say x is multiplicative inverse of a modulo N if $ax \eqiv 1 (mod N)$.
 
-This has a solution only when gcd(a, N) is 1 otherwise the remainder will never be 1 (remainder will always be a multiple of gcd).
+We say $x$ is multiplicative inverse of $a$ modulo $N$ if $ax \equiv 1 (mod N)$.
+This has a solution only when $(a, N) = 1$ otherwise the remainder will never be 1 (remainder will always be a multiple of gcd).
 
-
-### Modular division theorem
-For any a mod N, a has a multiplicative inverse modulo N if and only if it is relatively prime to N. When the inverse exists it can be found in O(n^3) (n is the number of bits of N) by running extended Euclid algorithm.
+The multiplicative inverse of a number $a$ such that $(a, N) = 1$ can be found by running extended Euclid algorithm in $O(n^3)$.
 
 Thus continuing with our previous example we wish to compute 11^{-1} mod 25.
 Using extended Euclid algorithm we find that 15. 25 - 34.11 = 1.
 
-Reducing both sides modulo 25 we have `-34.11 \equi 1 (mod  25)`
+Reducing both sides modulo 25 we have `-34.11 \equiv 1 (mod  25)`
 
-So -34 \equi 16 mod 25 is the inverse of 11 mod 25.
+So -34 \equiv 16 mod 25 is the inverse of 11 mod 25.
 
 ## Public Key cryptography
 
@@ -181,22 +171,22 @@ This is always 0 modulo N. which we will show from Fermat's little theorem.
 
 ##### Fermat's little theorem
 If p is prime then for every 1 <= a < p,
-$$ a^{p - 1} \equi 1 (mod p)$$
+$$ a^{p - 1} \equiv 1 (mod p)$$
 
 **Proof**
 
 We assume $i \in {1,2,..., p - 1}$.
 
-The numbers a.i mod p are distinct because if $a.i \equi a.j (mod p)$ then dividing both sides by a gives $i \equi j (mod p)$. They are nonzero because $a.i \equi 0$ similarly implies $i \equi 0$. (and we can divide by a so we assume a is nonzero and therefore relatively prime to p).
+The numbers a.i mod p are distinct because if $a.i \equiv a.j (mod p)$ then dividing both sides by a gives $i \equiv j (mod p)$. They are nonzero because $a.i \equiv 0$ similarly implies $i \equiv 0$. (and we can divide by a so we assume a is nonzero and therefore relatively prime to p).
 
 Thus,
 `{1,2,..., p - 1} = {a . 1 mod p, a . 2 mod p,..., a . (p - 1) mod p}`
 
 
 If we multiply together its elements in each of these representations we get
-$$(p - 1)! \equi a^{p - 1} . (p - 1)! (mod p)$$
+$$(p - 1)! \equiv a^{p - 1} . (p - 1)! (mod p)$$
 
 Dividing each side by $(p - 1)!$ we get the proof to our theorem.
 
 #### RSA correctness revisited
-The second form of the expression is convenient when simplified using Fermat's theorem. It is divisible by p (since $x^{p - 1} \equi 1 mod p$) and likewise by q. Since p and q are primes, this expression thus becomes divisible by their product N. Hence, RSA is proved.
+The second form of the expression is convenient when simplified using Fermat's theorem. It is divisible by p (since $x^{p - 1} \equiv 1 mod p$) and likewise by q. Since p and q are primes, this expression thus becomes divisible by their product N. Hence, RSA is proved.
