@@ -129,6 +129,16 @@
    RSA
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="greedy.html">
+   Greedy Algorithm for Egyptian Fractions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dp.html">
+   Longest path in DAGs
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -229,6 +239,11 @@
    Complexity Theory
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-density-of-prime-numbers">
+   The Density of Prime Numbers
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -242,7 +257,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>This project does a thorough exploration of Primality-Testing Algorithms and also covers the design and analysis of some Greedy and Dynamic Programming algorithms.</p>
+<p>This project does a thorough exploration of Primality-Testing Algorithms and also covers some Greedy and Dynamic Programming algorithms.</p>
 <p>We will assume that the reader is familiar with the basic arithmetic properties of class of integers <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span>.
 Some prelimnaries are covered henceforth:</p>
 <div class="section" id="divisibility-primes-and-composites">
@@ -331,6 +346,17 @@ The integers less than <span class="math notranslate nohighlight">\(p^m\)</span>
 <p>For example, it is easier to write <span class="math notranslate nohighlight">\(\tilde{O}(n)\)</span> than the (more precise) <span class="math notranslate nohighlight">\(O(n log n log log n)\)</span>.</p>
 </div>
 </div></div>
+<div class="section" id="the-density-of-prime-numbers">
+<h2>The Density of Prime Numbers<a class="headerlink" href="#the-density-of-prime-numbers" title="Permalink to this headline">¶</a></h2>
+<p>The prime distribution function <span class="math notranslate nohighlight">\(\pi(n)\)</span> denotes the number of primes that are less than or equal to n. For example, <span class="math notranslate nohighlight">\(\pi(10) = 4\)</span>, since there are 4 prime numbers less than or equal to 10, namely, 2, 3, 5, and 7.</p>
+<p>The prime number theorem gives a useful approximation to <span class="math notranslate nohighlight">\(\pi(n)\)</span>.</p>
+<div class="proof theorem admonition" id="theorem-8">
+<p class="admonition-title"><span class="caption-number">Theorem 2 </span></p>
+<div class="theorem-content section" id="proof-content">
+<p>lim_{n -&gt; \infty} \frac{\pi(n)}{n/\text{ln } n} = 1</p>
+</div>
+</div><p>This bound can be used to estimate <span class="math notranslate nohighlight">\(\pi(n)\)</span> with reasonable accuracy.</p>
+</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>

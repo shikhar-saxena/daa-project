@@ -130,6 +130,11 @@
    RSA
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="greedy.html">
+   Greedy Algorithm for Egyptian Fractions
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -259,7 +264,7 @@ Therefore, by fundamental theorem of arithmetic, we know for some <span class="m
 \[(X + a)^n \equiv X^n + a \quad (\text{mod } X^r - 1, n)\]</div>
 <p>This will lower the degree of the polynomial and thus reduce the number of coefficients needed to be calculated to confirm the test.</p>
 <div class="proof algorithm admonition" id="algorithm-1">
-<p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (AKS Primality Test)</p>
+<p class="admonition-title"><span class="caption-number">Algorithm 5 </span> (AKS Primality Test)</p>
 <div class="algorithm-content section" id="proof-content">
 <p>Input: <span class="math notranslate nohighlight">\(n \ge 2\)</span></p>
 <ol class="simple">
@@ -272,7 +277,8 @@ Therefore, by fundamental theorem of arithmetic, we know for some <span class="m
 <li><p>Return PRIME.</p></li>
 </ol>
 </div>
-</div><!-- 
+</div><p>Here, <span class="math notranslate nohighlight">\(ord_r(n)\)</span> is the order of the element <span class="math notranslate nohighlight">\(n\)</span> within the group <span class="math notranslate nohighlight">\(\mathbb{Z}^*_r\)</span>.</p>
+<!-- 
 While the lemma constitutes a primality test in itself, verifying it takes
 exponential time: the brute force approach would require the expansion
 of the (x + a)n polynomial and a reduction modn of the resulting n + 1

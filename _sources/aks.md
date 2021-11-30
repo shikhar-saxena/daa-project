@@ -73,6 +73,9 @@ Input: $n \ge 2$
 6. Return PRIME.
 ```
 
+Here, $ord_r(n)$ is the order of the element $n$ within the group $\mathbb{Z}^*_r$.
+
+
 <!-- 
 While the lemma constitutes a primality test in itself, verifying it takes
 exponential time: the brute force approach would require the expansion

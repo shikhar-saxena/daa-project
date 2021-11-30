@@ -207,8 +207,8 @@
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-euler-test">
-   The Euler Test
+  <a class="reference internal nav-link" href="#solovoy-strassen-test">
+   Solovoy Strassen Test
   </a>
  </li>
 </ul>
@@ -226,7 +226,7 @@
 <h1>Fermat’s Test<a class="headerlink" href="#fermat-s-test" title="Permalink to this headline">¶</a></h1>
 <p>Fermat’s Little Theorem allows us to prove that a number is composite without actually factoring it.</p>
 <div class="proof theorem admonition" id="theorem-0">
-<p class="admonition-title"><span class="caption-number">Theorem 3 </span> (Fermat’s Little Theorem)</p>
+<p class="admonition-title"><span class="caption-number">Theorem 4 </span> (Fermat’s Little Theorem)</p>
 <div class="theorem-content section" id="proof-content">
 <p>If <span class="math notranslate nohighlight">\(p\)</span> is prime and <span class="math notranslate nohighlight">\((p, a) = 1\)</span> then</p>
 <div class="math notranslate nohighlight">
@@ -234,7 +234,7 @@
 </div>
 </div><div class="proof admonition" id="proof">
 <p>Proof. We assume <span class="math notranslate nohighlight">\(i \in {1,2,..., p - 1}\)</span>.</p>
-<p>The numbers <span class="math notranslate nohighlight">\(a\cdot i\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> are distinct because if <span class="math notranslate nohighlight">\(a\cdot i \equiv a\cdot j\)</span> (mod <span class="math notranslate nohighlight">\(p\)</span>) then dividing both sides by <span class="math notranslate nohighlight">\(a\)</span> gives <span class="math notranslate nohighlight">\(i \equi j (mod p)\)</span>. They are nonzero because <span class="math notranslate nohighlight">\(a\cdot i \equiv 0\)</span> similarly implies <span class="math notranslate nohighlight">\(i \equiv 0\)</span>. (and we can divide by <span class="math notranslate nohighlight">\(a\)</span> so we assume <span class="math notranslate nohighlight">\(a\)</span> is nonzero and therefore relatively prime to <span class="math notranslate nohighlight">\(p\)</span>).</p>
+<p>The numbers <span class="math notranslate nohighlight">\(a\cdot i\)</span> mod <span class="math notranslate nohighlight">\(p\)</span> are distinct because if <span class="math notranslate nohighlight">\(a\cdot i \equiv a\cdot j\)</span> (mod <span class="math notranslate nohighlight">\(p\)</span>) then dividing both sides by <span class="math notranslate nohighlight">\(a\)</span> gives <span class="math notranslate nohighlight">\(i \equiv j\)</span> (mod <span class="math notranslate nohighlight">\(p\)</span>). They are nonzero because <span class="math notranslate nohighlight">\(a\cdot i \equiv 0\)</span> similarly implies <span class="math notranslate nohighlight">\(i \equiv 0\)</span>. (and we can divide by <span class="math notranslate nohighlight">\(a\)</span> so we assume <span class="math notranslate nohighlight">\(a\)</span> is nonzero and therefore relatively prime to <span class="math notranslate nohighlight">\(p\)</span>).</p>
 <p>Thus, both the sets <span class="math notranslate nohighlight">\(\{1,2,\ldots, p - 1\}\)</span> and <span class="math notranslate nohighlight">\(\{a \cdot 1\)</span> mod <span class="math notranslate nohighlight">\(p, a \cdot 2\)</span> mod <span class="math notranslate nohighlight">\(p,\ldots, a \cdot (p - 1)\)</span> mod <span class="math notranslate nohighlight">\(p\}\)</span> are equal.</p>
 <p>If we multiply together the elements in each of these representations we get</p>
 <div class="math notranslate nohighlight">
@@ -266,40 +266,75 @@ low.</p>
 <div class="algorithm-content section" id="proof-content">
 <p><strong>Input:</strong> n &gt; 1</p>
 <ol class="simple">
-<li><p>for <span class="math notranslate nohighlight">\(i = 1\)</span> to <span class="math notranslate nohighlight">\(k\)</span> do
-1. choose random <span class="math notranslate nohighlight">\(a \ni 2 \le a \le n − 1\)</span>.
-2. if <span class="math notranslate nohighlight">\(a^{n} \not \equiv a (mod n)\)</span>, return COMPOSITE.
-4: return PROBABLY PRIME.</p></li>
+<li><p>for <span class="math notranslate nohighlight">\(i = 1\)</span> to <span class="math notranslate nohighlight">\(k\)</span> do</p>
+<ol class="simple">
+<li><p>choose random <span class="math notranslate nohighlight">\(a \ni 2 \le a \le n − 1\)</span>.</p></li>
+<li><p>if <span class="math notranslate nohighlight">\(a^{n} \not \equiv a\)</span> (mod <span class="math notranslate nohighlight">\(n)\)</span>, return COMPOSITE.</p></li>
+</ol>
+</li>
+<li><p>return PROBABLY PRIME.</p></li>
 </ol>
 </div>
-</div><p>We can improve upon the limitations of Fermat’s test by further restricting the test-condition.</p>
+</div><p>With fast powering algorithm, each computation of <span class="math notranslate nohighlight">\(a^n\)</span> takes <span class="math notranslate nohighlight">\(\tilde{O}(n^2)\)</span> time, making the overall complexity of the Fermat Test <span class="math notranslate nohighlight">\(\tilde{O}(k n^2)\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> is the number of times we run the test.</p>
+<!-- # Pocklington-Lehmer Primality Test
+
+````{prf:theorem}
+Suppose $n − 1 = f r$ with $(f, r) = 1$ and suppose that a complete factorization of $f$ is known. 
+
+Suppose that there exists an $a$ such that 
+
+```{math}
+a^{n−1} \equiv 1 \text{ mod } n \text{ and } \left(a^{\frac{n−1}{q}, n \right) = 1
+```
+
+for every prime factor $q$ of $f$. Then every prime factor of $n$ is congruent to $1$ mod $f$.
+```` -->
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="the-euler-test">
-<h1>The Euler Test<a class="headerlink" href="#the-euler-test" title="Permalink to this headline">¶</a></h1>
-<p>If <span class="math notranslate nohighlight">\(n\)</span> is an odd prime, we know that an integer can have at most two square roots, mod n. In particular, the only square roots of 1 (mod n)
-are ±1.
-If a ≡/ 0 (mod n), a(n−1)/2 is a square root of a(n−1) ≡ 1 (mod n), so
-a(n−1)/2 ≡ ±1 (mod n).
-If a(n−1)/2 ≡/ ±1 (mod n) for some a with a ≡/ 0 (mod n), then n is
-composite.
-Euler Test: For a randomly chosen a with a ≡/ 0 (mod n), compute
-a(n−1)/2 (mod n).
-i) If a(n−1)/2 ≡ ±1 (mod n), declare n a probable prime, and
-optionally repeat the test a few more times.
-If n is large and chosen at random, the probability that n is
-prime is very close to 1.
-ii) If a(n−1)/2 ≡/ ±1 (mod n), declare n composite.
-This is always correct.
-The Euler test is more powerful than the Fermat test.
-If the Fermat test finds that n is composite, so does the Euler test.
-But the Euler test may find n composite even when the Fermat test
-fails. Why?
-If n is an odd composite integer (other than a prime power),
-1 has at least 4 square roots mod n.
-So we can have a(n−1)/2 ≡ β (mod n), where β ≠ ±1 is a square
-root of 1. Then an−1 ≡ 1 (mod n). In this situation, the Fermat
-Test (incorrectly) declares n a probable prime, but the Euler
-test (correctly) declares n composite</p>
+<div class="tex2jax_ignore mathjax_ignore section" id="solovoy-strassen-test">
+<h1>Solovoy Strassen Test<a class="headerlink" href="#solovoy-strassen-test" title="Permalink to this headline">¶</a></h1>
+<div class="proof definition admonition" id="definition-4">
+<p class="admonition-title"><span class="caption-number">Definition 6 </span> (Jacobi Symbol)</p>
+<div class="definition-content section" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(n\)</span> is a positive odd integer with prime factorization <span class="math notranslate nohighlight">\(n = p_1^{e_1} \cdots p_k^{e_k}\)</span> and a is a positive integer then the Jacobi symbol is defined as</p>
+<div class="math notranslate nohighlight">
+\[(a/n) = (a/p_1)^e_1 \cdots (a/p_k)^e_k.\]</div>
+</div>
+</div><p>Some properties of Jacobi Symbol are as follows:</p>
+<p>If <span class="math notranslate nohighlight">\(m, n\)</span> are odd positive integers, then</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\((2/n) = (−1)^{\frac{n^2 - 1}{8}}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((m/n) = (−1)^{\frac(m−1)(n−1)}{4}(n/m)\)</span>.</p></li>
+</ol>
+<div class="proof definition admonition" id="definition-5">
+<p class="admonition-title"><span class="caption-number">Definition 7 </span> (Euler pseudoprime)</p>
+<div class="definition-content section" id="proof-content">
+<p>An <em>odd composite integer</em> <span class="math notranslate nohighlight">\(n\)</span> is an Euler pseudoprime to the base b if</p>
+<div class="math notranslate nohighlight">
+\[b^{\frac{n - 1}{2}} \equiv (b/n) mod n,\]</div>
+<p>where (b/n) is the <em>Jacobi symbol</em>.</p>
+</div>
+</div><div class="proof theorem admonition" id="theorem-6">
+<p class="admonition-title"><span class="caption-number">Theorem 5 </span> (Solvay-Strassen Theorem)</p>
+<div class="theorem-content section" id="proof-content">
+<p>If n is an odd composite integer, then n is an Euler pseudoprime for at most one-half of the bases b with <span class="math notranslate nohighlight">\(1 &lt; b &lt; n\)</span> and <span class="math notranslate nohighlight">\((b, n) = 1\)</span></p>
+</div>
+</div><p>The test is as follows:</p>
+<div class="proof algorithm admonition" id="algorithm-7">
+<p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (Solovay–Strassen primality test)</p>
+<div class="algorithm-content section" id="proof-content">
+<p><strong>Input:</strong> An odd integer n</p>
+<ol class="simple">
+<li><p>Choose k random integers <span class="math notranslate nohighlight">\(b_1,\cdots , b_k\)</span> with <span class="math notranslate nohighlight">\(1 &lt; b_i &lt; n\)</span></p></li>
+<li><p>For <span class="math notranslate nohighlight">\(i = 1,\cdots , k\)</span></p>
+<ol class="simple">
+<li><p>Compute <span class="math notranslate nohighlight">\((b_i, n)\)</span> (by the Euclidean algorithm). If <span class="math notranslate nohighlight">\((b_i, n) &gt; 1\)</span>, then return COMPOSITE</p></li>
+<li><p>Compute <span class="math notranslate nohighlight">\(b_i^{(n−1)/2}\)</span> mod <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\((b_i/n)\)</span> mod <span class="math notranslate nohighlight">\(n\)</span>. If these two are not equal then return COMPOSITE</p></li>
+</ol>
+</li>
+<li><p>return PROBABLY PRIME</p></li>
+</ol>
+</div>
+</div><p>Here, the probability that <span class="math notranslate nohighlight">\(n\)</span> is actually prime is greater than <span class="math notranslate nohighlight">\(1 - 2^{-k}\)</span>.</p>
 </div>
 
     <script type="text/x-thebe-config">

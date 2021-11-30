@@ -55,6 +55,7 @@
     <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Greedy Algorithm for Egyptian Fractions" href="greedy.html" />
     <link rel="prev" title="AKS Primality Test" href="aks.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,6 +130,16 @@
    RSA
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="greedy.html">
+   Greedy Algorithm for Egyptian Fractions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dp.html">
+   Longest path in DAGs
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -201,16 +212,38 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#modular-inversion">
-   Modular Inversion
+  <a class="reference internal nav-link" href="#euclid-s-algorithm">
+   Euclid’s Algorithm
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#modular-division-theorem">
-     Modular division theorem
+    <a class="reference internal nav-link" href="#analysis">
+     Analysis
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extended-euclid-s-algorithm">
+   Extended Euclid’s Algorithm
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-to-find-such-x-and-y">
+     How to find such x and y?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     Algorithm
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modular-inversion">
+   Modular Inversion
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#public-key-cryptography">
@@ -266,18 +299,100 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="rsa">
 <h1>RSA<a class="headerlink" href="#rsa" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="euclid-s-algorithm">
+<h2>Euclid’s Algorithm<a class="headerlink" href="#euclid-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Euclid’s algorithm is a simple algorithm stated as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">Euclid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> 
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">Two</span> <span class="n">integers</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span> <span class="k">with</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="n">Output</span><span class="p">:</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="n">a</span>
+<span class="k">return</span> <span class="n">Euclid</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>This algorithm is based on the divide and conquer paradigm (the property used here for recursion is proved later). In Euclid’s algorithm we see, that we reduce the second operand (because <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">mod</span> <span class="pre">b</span></code> will always be less than <code class="docutils literal notranslate"><span class="pre">b</span></code>). Eventually the second operand will turn 0 which is our base case i.e., GCD(a, 0) is a (since 0 is divisible by any number).</p>
+<p>Thus the reduction of 2nd operand eventually leads the algorithm to terminate. Analysis of this algorithm is shown later.</p>
+<p>The property used for recursion is stated as follows:</p>
+<blockquote>
+<div><p>If x and y are positive integers with x &gt;= y then <code class="docutils literal notranslate"><span class="pre">gcd(x,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">mod</span> <span class="pre">y,</span> <span class="pre">y)</span></code></p>
+</div></blockquote>
+<p><strong>Proof:</strong></p>
+<p>It is enough to show the slightly simpler rule <code class="docutils literal notranslate"><span class="pre">gcd(x,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">-</span> <span class="pre">y,</span> <span class="pre">y)</span></code> from which the one stated can be derived by repeatedly subtracting y from x (since <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">mod</span> <span class="pre">y</span></code> is <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">ny</span></code> for some <code class="docutils literal notranslate"><span class="pre">n</span></code>).</p>
+<p>Any integer that divides both x and y must also divide x - y so gcd(x, y) must also be a common divisor of gcd(x - y, y). Likewise, any integer that divides both x - y and y also divides x and y. Thus, gcd(x - y, y) is also a common factor of gcd(x, y). Thus, <code class="docutils literal notranslate"><span class="pre">gcd(x,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">-</span> <span class="pre">y,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">gcd(x</span> <span class="pre">mod</span> <span class="pre">y,</span> <span class="pre">y)</span></code></p>
+<div class="section" id="analysis">
+<h3>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h3>
+<p><strong>Lemma:</strong> If a &gt;= b then a mod b &lt; a/2.</p>
+<p><strong>Proof:</strong></p>
+<p>Either b &lt;= a/2 or b &gt; a/2. For these two cases we notice:</p>
+<ul class="simple">
+<li><p>if b &lt;= a/2 then we have a mod b &lt; b &lt;= a/2</p></li>
+<li><p>and if b &gt; a/2 then a mod b = a - b &lt; a/2</p></li>
+</ul>
+<p>So no matter the values of a and b, two steps in recursion (one comparison and one computation a mod b) our input gets halved.</p>
+<p>Therefore, for 2k steps a, will be reduced to a/2^k.</p>
+<p>Therefore total steps required will be about <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">log</span> <span class="pre">a</span></code> steps. Therefore this algorithm will work for larger numbers as well (since it is logarithmic in time).</p>
+<p>Therefore for n-bit numbers a and b it will take O(n) time which is linear in time. Thus, this algorithm is an optimum algorithm.</p>
+</div>
+</div>
+<div class="section" id="extended-euclid-s-algorithm">
+<h2>Extended Euclid’s Algorithm<a class="headerlink" href="#extended-euclid-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Extended Euclid’s algorithm solves a generalization of GCD.</p>
+<p><strong>Lemma</strong> If d divides both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">ax</span> <span class="pre">+</span> <span class="pre">by</span></code> where x and y are some integers then necessarily <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">gcd(a,</span> <span class="pre">b)</span></code>.</p>
+<p>Thus the lemma states that the number that divides both a and b, that can be expressed as their linear combination, is the gcd of the two numbers.</p>
+<p><strong>Proof</strong>: By the first two conditions d is a common divisor of a and b and so it cannot exceed the greatest common divisor, that is, <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">&lt;=</span> <span class="pre">gcd(a,</span> <span class="pre">b)</span></code>. On the other hand since gcd(a, b) is a common divisor of a and b, it must also divide <code class="docutils literal notranslate"><span class="pre">ax</span> <span class="pre">+</span> <span class="pre">by</span> <span class="pre">=</span> <span class="pre">d</span></code> which implies <code class="docutils literal notranslate"><span class="pre">gcd(a,b)</span> <span class="pre">&lt;=</span> <span class="pre">d</span></code>. So from these two inequalities we get</p>
+<p><code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">gcd(a,</span> <span class="pre">b)</span></code></p>
+<p>Therefore Extended Euclid’s algorithm tries to find such coefficients x and y so as to compute the GCD. Thus, this is a generalization of GCD. We not just find the GCD but we also find out coefficients associated with each input a and b.</p>
+<div class="section" id="how-to-find-such-x-and-y">
+<h3>How to find such x and y?<a class="headerlink" href="#how-to-find-such-x-and-y" title="Permalink to this headline">¶</a></h3>
+<p><strong>Example</strong>
+For gcd(25, 11)</p>
+<p>Euclid’s algorithm proceeds as follows</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span> <span class="o">=</span> <span class="mf">2.11</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="mi">11</span> <span class="o">=</span> <span class="mf">3.3</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">+</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Essentially gcd(25, 11) = gcd(25 mod 11, 11) = gcd(3, 11) = gcd(3, 2) = gcd(1, 2) = gcd(1, 0) = 1</p>
+</div></blockquote>
+<p>This gives us an idea to find coefficients x and y.</p>
+<p>25 can be written as a linear combination of 11 and 3 or in other words linear combination of 25 and 11 give 3. But 3 itself can be written as a  combination of 2 and 1 where 2 is given as a combination of 1 (and 0).</p>
+<p>Thus, we reach 1 as a linear combination of 25 and 11.</p>
+</div>
+<div class="section" id="algorithm">
+<h3>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">extended</span><span class="o">-</span><span class="n">Euclid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">Two</span> <span class="n">positive</span> <span class="n">integers</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span> <span class="k">with</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="n">Output</span><span class="p">:</span> <span class="n">Integers</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">d</span> <span class="n">such</span> <span class="n">that</span> <span class="n">d</span> <span class="o">=</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ax</span> <span class="o">+</span> <span class="n">by</span> <span class="o">=</span> <span class="n">d</span>
+
+<span class="k">if</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="s1">&#39;, y&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="o">=</span> <span class="n">extended</span><span class="o">-</span><span class="n">Euclid</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="p">(</span><span class="n">y</span><span class="s1">&#39;, x&#39;</span> <span class="o">-</span> \<span class="n">lfloor</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> \<span class="n">rfloor</span> <span class="n">y</span><span class="s1">&#39;, d)</span>
+</pre></div>
+</div>
+<p>Here we use the division property:
+Dividend = Quotient * Divisor + Remainder</p>
+<p>So,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">(</span>\<span class="n">lfloor</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> \<span class="n">rfloor</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span> <span class="o">+</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span> 
+<span class="ow">or</span> <span class="n">a</span> <span class="n">mod</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="p">(</span>\<span class="n">lfloor</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> \<span class="n">rfloor</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Substituting this value of a mod b we can get the desired combination for a and b.</p>
+</div>
+</div>
 <div class="section" id="modular-inversion">
 <h2>Modular Inversion<a class="headerlink" href="#modular-inversion" title="Permalink to this headline">¶</a></h2>
 <p>We say <span class="math notranslate nohighlight">\(x\)</span> is multiplicative inverse of <span class="math notranslate nohighlight">\(a\)</span> modulo <span class="math notranslate nohighlight">\(N\)</span> if <span class="math notranslate nohighlight">\(ax \equiv 1 (mod N)\)</span>.
 This has a solution only when <span class="math notranslate nohighlight">\((a, N) = 1\)</span> otherwise the remainder will never be 1 (remainder will always be a multiple of gcd).</p>
-<div class="section" id="modular-division-theorem">
-<h3>Modular division theorem<a class="headerlink" href="#modular-division-theorem" title="Permalink to this headline">¶</a></h3>
-<p>For any a mod N, a has a multiplicative inverse modulo N if and only if it is relatively prime to N. When the inverse exists it can be found in O(n^3) (n is the number of bits of N) by running extended Euclid algorithm.</p>
+<p>The multiplicative inverse of a number <span class="math notranslate nohighlight">\(a\)</span> such that <span class="math notranslate nohighlight">\((a, N) = 1\)</span> can be found by running extended Euclid algorithm in <span class="math notranslate nohighlight">\(O(n^3)\)</span>.</p>
 <p>Thus continuing with our previous example we wish to compute 11^{-1} mod 25.
 Using extended Euclid algorithm we find that 15. 25 - 34.11 = 1.</p>
 <p>Reducing both sides modulo 25 we have <code class="docutils literal notranslate"><span class="pre">-34.11</span> <span class="pre">\equiv</span> <span class="pre">1</span> <span class="pre">(mod</span>&#160; <span class="pre">25)</span></code></p>
 <p>So -34 \equiv 16 mod 25 is the inverse of 11 mod 25.</p>
-</div>
 </div>
 <div class="section" id="public-key-cryptography">
 <h2>Public Key cryptography<a class="headerlink" href="#public-key-cryptography" title="Permalink to this headline">¶</a></h2>
@@ -371,6 +486,15 @@ $<span class="math notranslate nohighlight">\((p - 1)! \equiv a^{p - 1} . (p - 1
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="greedy.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Greedy Algorithm for Egyptian Fractions</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         

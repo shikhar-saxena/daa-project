@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Design and Analysis of Greedy Algorithms &#8212; Algorithm Analysis and Design Project</title>
+    <title>Greedy Algorithm for Egyptian Fractions &#8212; Algorithm Analysis and Design Project</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -43,6 +43,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -53,6 +55,7 @@
     <link rel="shortcut icon" href="_static/ico.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="RSA" href="rsa.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -88,7 +91,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="trial-division.html">
    Trial Division Test
@@ -123,7 +126,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="rsa.html">
-   GCD
+   RSA
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Greedy Algorithm for Egyptian Fractions
   </a>
  </li>
 </ul>
@@ -192,6 +200,79 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Greedy Algorithm for Egyptian Fractions
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#greedy-choice">
+     Greedy Choice
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-mst-problem">
+   The MST Problem
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#greedy-approach-kruskal-s-algorithm">
+   Greedy Approach: Kruskal’s Algorithm
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-is-it-greedy">
+     Why is it Greedy?
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#proof-of-correctness">
+     Proof of correctness
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-cut-property">
+       The CUT Property
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kruskal-s-algorithm-implementation">
+     Kruskal’s algorithm implementation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#disjoint-set-data-structure">
+       Disjoint-set data structure
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#three-properties-of-rank-x">
+         Three Properties of Rank(x)
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#analysis">
+       Analysis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -200,9 +281,125 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="design-and-analysis-of-greedy-algorithms">
-<h1>Design and Analysis of Greedy Algorithms<a class="headerlink" href="#design-and-analysis-of-greedy-algorithms" title="Permalink to this headline">¶</a></h1>
-<p>Henceforth in the project</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="greedy-algorithm-for-egyptian-fractions">
+<h1>Greedy Algorithm for Egyptian Fractions<a class="headerlink" href="#greedy-algorithm-for-egyptian-fractions" title="Permalink to this headline">¶</a></h1>
+<p>In mathematics, the <strong>greedy algorithm for Egyptian fractions</strong> is a greedy algorithm, first described by Fibonacci, for transforming rational numbers into Egyptian fractions.</p>
+<div class="proof definition admonition" id="definition-0">
+<p class="admonition-title"><span class="caption-number">Definition 8 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>An Egyptian fraction is a representation of an irreducible fraction as a sum of distinct unit fractions, such as</p>
+<p><span class="math notranslate nohighlight">\(5/6 = 1/2 + 1/3\)</span>.</p>
+<p>Unit fractions are fractions with numerator <span class="math notranslate nohighlight">\(= 1\)</span>.</p>
+</div>
+</div><p>As the name indicates, these representations have been used as long ago as ancient Egypt, but the first published systematic method for constructing such expansions is described in the <em>Liber Abaci</em> by Fibonacci. It is called a greedy algorithm because at each step the algorithm chooses greedily the largest possible unit fraction that can be used in any representation of the remaining fraction.</p>
+<div class="section" id="greedy-choice">
+<h2>Greedy Choice<a class="headerlink" href="#greedy-choice" title="Permalink to this headline">¶</a></h2>
+<p>For the fraction <span class="math notranslate nohighlight">\(x/y\)</span> we take out <span class="math notranslate nohighlight">\(\frac{1}{\lceil \frac{y}{x}\rceil}\)</span> which is the maximum possible unit fraction that can be taken out from <span class="math notranslate nohighlight">\(x/y\)</span>.</p>
+<p>Hence, we are greedy in our choice of picking the unit fraction.</p>
+<p>Now, for the remaining fraction, repeat the same stuff until we reach a fraction which is a unit fraction in which.</p>
+<p>As each expansion step reduces the numerator of the remaining fraction to be expanded, this method always terminates with a finite expansion. However, compared to ancient Egyptian expansions or to more modern methods, this method may produce expansions that are quite long, with large denominators.</p>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="the-mst-problem">
+<h1>The MST Problem<a class="headerlink" href="#the-mst-problem" title="Permalink to this headline">¶</a></h1>
+<p><em>Input:</em> An undirected graph G = (V,E); edge weights <span class="math notranslate nohighlight">\(w_e\)</span>.</p>
+<p><em>Output:</em> A tree T = (V, E’) with <span class="math notranslate nohighlight">\(E'\subseteq E\)</span>, that minimizes weight(T) = <span class="math notranslate nohighlight">\(\sum_{e\in E'} w_e\)</span></p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="greedy-approach-kruskal-s-algorithm">
+<h1>Greedy Approach: Kruskal’s Algorithm<a class="headerlink" href="#greedy-approach-kruskal-s-algorithm" title="Permalink to this headline">¶</a></h1>
+<p><strong>Greedy approach (here):</strong> We will add minimum weight edges that do not produce a cycle in the graph.</p>
+<ul class="simple">
+<li><p>Start with an empty graph.</p></li>
+<li><p>Repeatedly add next edge (with least weight) that doesn’t produce a cycle.</p></li>
+<li><p>After some point we will reach the MST.</p></li>
+</ul>
+<div class="section" id="why-is-it-greedy">
+<h2>Why is it Greedy?<a class="headerlink" href="#why-is-it-greedy" title="Permalink to this headline">¶</a></h2>
+<p>Because we are greedy in our choice of edges (to get the MST) and also we choose one local optimum to another so as to get a global optimum.</p>
+</div>
+<div class="section" id="proof-of-correctness">
+<h2>Proof of correctness<a class="headerlink" href="#proof-of-correctness" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-cut-property">
+<h3>The CUT Property<a class="headerlink" href="#the-cut-property" title="Permalink to this headline">¶</a></h3>
+<p><strong>CUT Property:</strong> Suppose edges X are part of a MST of <span class="math notranslate nohighlight">\(G = (V,E)\)</span>. Pick any subset of nodes S for which X does not cross between <span class="math notranslate nohighlight">\(S\)</span> and <span class="math notranslate nohighlight">\(V-S\)</span>, and let e be the lightest edge across this partition. Then <span class="math notranslate nohighlight">\(X \cup \{e\}\)</span> is part of some MST.</p>
+<p>Essentially the cut property says that if we have some edges in our MST, then we can still increase the edge set and still be part of an MST.</p>
+<div class="proof admonition" id="proof">
+<p>Proof. - Edges X are part of some MST T</p>
+<ul class="simple">
+<li><p>Assume new edge e is not in T</p></li>
+<li><p>Construct a different MST T’ containing <span class="math notranslate nohighlight">\(X \cup \{e\}\)</span></p></li>
+<li><p>Add edge e to T, and this creates a cycle having another edge e’ between S and V-S. <em>If we remove edge e’, we are left with <span class="math notranslate nohighlight">\(T' = T \cup \{e\} - \{e'\}\)</span></em> which we will show to be a tree. e and e’ should be of same weight (because we picked lightest edge and T is also an MST).</p></li>
+<li><p>T’ is connected since e’ is a cycle edge (removing the cycle edge cannot disconnect the graph).</p></li>
+<li><p>And T’ has the same number of edges as T, so it is also a tree (since both will have |V|-1 edges).</p></li>
+</ul>
+<p>Any connected, undirected graph <span class="math notranslate nohighlight">\(G=(V,E)\)</span> with <span class="math notranslate nohighlight">\(|E| = |V| - 1\)</span> is a tree.
+(A tree on n nodes has <span class="math notranslate nohighlight">\(n-1\)</span> edges).</p>
+<p>Moreover, T’ is a MST, Compare its weight to that of T: weight(<span class="math notranslate nohighlight">\(T'\)</span>) = weight<span class="math notranslate nohighlight">\((T) + w(e) - w(e')\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\therefore\)</span> Kruskal’s algorithm is correct (since it satisfies the cut property).</p>
+</div>
+</div>
+</div>
+<div class="section" id="kruskal-s-algorithm-implementation">
+<h2>Kruskal’s algorithm implementation<a class="headerlink" href="#kruskal-s-algorithm-implementation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="disjoint-set-data-structure">
+<h3>Disjoint-set data structure<a class="headerlink" href="#disjoint-set-data-structure" title="Permalink to this headline">¶</a></h3>
+<p>This data structure stores a collection of disjoint sets. Each tree in a forest is its own set with the root node being the representative of the set. We will use it here to get the MST.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">procedure</span> <span class="n">kruskal</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+<span class="n">Input</span><span class="p">:</span> <span class="n">A</span> <span class="n">connected</span> <span class="n">undirected</span> <span class="n">graph</span> <span class="n">G</span> <span class="k">with</span> <span class="n">edge</span> <span class="n">weights</span> <span class="n">w_e</span>
+<span class="n">Output</span><span class="p">:</span> <span class="n">A</span> <span class="n">MST</span> <span class="n">defined</span> <span class="n">by</span> <span class="n">edges</span> <span class="n">X</span>
+
+<span class="k">for</span> <span class="nb">all</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
+    <span class="n">makeset</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">//</span> <span class="n">makeset</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">creates</span> <span class="n">a</span> <span class="n">singleton</span> <span class="nb">set</span> <span class="n">containing</span> <span class="n">just</span> <span class="n">x</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">Sort</span> <span class="n">the</span> <span class="n">edges</span> <span class="n">E</span> <span class="n">by</span> <span class="n">weight</span>
+<span class="k">for</span> <span class="nb">all</span> <span class="n">edges</span> <span class="p">{</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">}</span> <span class="ow">in</span> <span class="n">E</span><span class="p">,</span> <span class="ow">in</span> <span class="n">increasing</span> <span class="n">order</span> <span class="n">of</span> <span class="n">weight</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">find</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">!=</span> <span class="n">find</span><span class="p">(</span><span class="n">v</span><span class="p">):</span> <span class="o">//</span> <span class="n">find</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="n">to</span> <span class="n">which</span> <span class="nb">set</span> <span class="n">does</span> <span class="n">x</span> <span class="n">belong</span>
+        <span class="n">add</span> <span class="n">edge</span> <span class="p">{</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">}</span> <span class="n">to</span> <span class="n">X</span>
+        <span class="n">union</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">procedure</span> <span class="n">makeset</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">pi</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">//</span> <span class="n">parent</span> <span class="n">pointer</span>
+<span class="n">rank</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">//</span> <span class="n">Rank</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">height</span> <span class="n">of</span> <span class="n">the</span> <span class="n">sub</span> <span class="n">tree</span> <span class="n">hanging</span> <span class="kn">from</span> <span class="nn">that</span> <span class="n">node</span>
+</pre></div>
+</div>
+<p>Function find returns the root node of the node x.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">find</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">pi</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="n">x</span> <span class="o">=</span> <span class="n">pi</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">procedure</span> <span class="n">union</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">rx</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ry</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">rx</span> <span class="o">==</span> <span class="n">ry</span><span class="p">:</span> <span class="k">return</span>
+<span class="k">if</span> <span class="n">rank</span><span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">rank</span><span class="p">(</span><span class="n">ry</span><span class="p">):</span> <span class="n">pi</span><span class="p">(</span><span class="n">ry</span><span class="p">)</span> <span class="o">=</span> <span class="n">rx</span>
+<span class="k">else</span><span class="p">:</span> 
+    <span class="n">pi</span><span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">=</span> <span class="n">ry</span>
+    <span class="k">if</span> <span class="n">rank</span><span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">==</span> <span class="n">rank</span><span class="p">(</span><span class="n">ry</span><span class="p">):</span> <span class="n">rank</span><span class="p">(</span><span class="n">ry</span><span class="p">)</span> <span class="o">=</span> <span class="n">rank</span><span class="p">(</span><span class="n">ry</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>union will give us the merge of the two sets.</p>
+<div class="section" id="three-properties-of-rank-x">
+<h4>Three Properties of Rank(x)<a class="headerlink" href="#three-properties-of-rank-x" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>For any x, rank(x) &lt; rank(pi(x)).</p></li>
+<li><p>Any root node of rank k has atleast <span class="math notranslate nohighlight">\(2^k\)</span> nodes in its tree. (we can prove this using induction).</p></li>
+<li><p>If there are n elements overall, there can be atmost <span class="math notranslate nohighlight">\(n/2^k\)</span> nodes of rank k.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="analysis">
+<h3>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Makeset taken O(1) time</p></li>
+<li><p>Find takes O(log n) time</p></li>
+<li><p>Union takes O(log n) time</p></li>
+</ul>
+<p>Therefore, overall it takes <span class="math notranslate nohighlight">\(O((|E| + |V|) \log |V|)\)</span> time.</p>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -234,6 +431,15 @@
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="rsa.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">RSA</p>
+            </div>
+        </a>
+    </div>
 
 </div>
         
