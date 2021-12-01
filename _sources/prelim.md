@@ -104,7 +104,7 @@ The prime distribution function $\pi(n)$ denotes the number of primes that are l
 The prime number theorem gives a useful approximation to $\pi(n)$.
 
 ````{prf:theorem}
-lim_{n -> \infty} \frac{\pi(n)}{n/\text{ln } n} = 1
+$lim_{n -> \infty} \frac{\pi(n)}{n/\text{ln } n} = 1$
 ````
 
 This bound can be used to estimate $\pi(n)$ with reasonable accuracy.
