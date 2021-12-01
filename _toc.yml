@@ -9,7 +9,7 @@ chapters:
   sections:
   - file: fermat-test 
   - file: miller-rabin
-- file: aks ############
-- file: rsa ########
+- file: aks
+- file: rsa 
 - file: greedy 
-- file: dp ########
+- file: dp
